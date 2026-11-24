@@ -133,7 +133,21 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .role span { white-space: nowrap; }
 .role .sep { color: var(--accent); margin-inline: 4px; font-weight: 400; }
 
-.lede { color: var(--text-2); font-size: 17px; max-width: 34em; margin: 0 0 32px; }
+.lede { color: var(--text-2); font-size: 17px; max-width: 34em; margin: 0 0 24px; }
+
+.hero-cred {
+  display: inline-flex; align-items: center; gap: 14px; margin: 0 0 28px; padding: 12px 20px 12px 12px;
+  border: 1px solid var(--accent-line); border-radius: 14px;
+  background: linear-gradient(90deg, rgba(45, 212, 191, 0.13), rgba(45, 212, 191, 0.03));
+}
+.hero-cred-icon {
+  display: grid; place-items: center; flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px;
+  background: var(--accent-soft); color: var(--accent);
+}
+.hero-cred-icon svg { width: 22px; height: 22px; }
+.hero-cred-text { display: flex; flex-direction: column; line-height: 1.35; }
+.hero-cred-text strong { font-size: 15.5px; font-weight: 600; color: var(--text); }
+.hero-cred-text span { margin-top: 2px; font-size: 14px; color: var(--text-2); }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-actions.center { justify-content: center; }
@@ -502,6 +516,9 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .hero { padding-block: 48px 40px; }
   .role .sep { margin-inline: 2px; }
   .lede, .about-text p { font-size: 16px; }
+  .hero-cred { display: flex; padding: 12px 14px 12px 12px; }
+  .hero-cred-text strong { font-size: 14.5px; }
+  .hero-cred-text span { font-size: 13.5px; }
   .terminal pre { font-size: 11px; padding: 16px; }
   .stat { padding: 20px 16px; }
   .stat-value { font-size: 28px; }
