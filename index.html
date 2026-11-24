@@ -111,7 +111,7 @@
     <!-- ABOUT -->
     <section class="section container" id="about">
       <div class="section-head reveal">
-        <p class="section-kicker">01 // about</p>
+        <p class="section-kicker"><span class="prompt">$</span> cat about.md</p>
         <h2 class="section-title">Safe, auditable change at enterprise scale</h2>
       </div>
 
@@ -184,7 +184,7 @@
           <img src="assets/img/snowflake-event.jpg" width="720" height="960" alt="Ganesh giving a thumbs-up next to the Snowflake polar bear mascot at a Snowflake conference" loading="lazy">
         </figure>
         <div class="community-text">
-          <p class="section-kicker">in the community</p>
+          <p class="section-kicker"><span class="prompt">$</span> snow connection test</p>
           <h3>At Snowflake events</h3>
           <p>Snowflake is at the center of my current platform work, so I keep up with the community at Snowflake events, and say hi to the mascot when I get the chance.</p>
           <ul class="chips" aria-label="Snowflake features I work with">
@@ -196,9 +196,26 @@
 
     <!-- EXPERIENCE -->
     <section class="section container" id="experience">
-      <div class="section-head reveal">
-        <p class="section-kicker">02 // experience</p>
-        <h2 class="section-title">Where I've worked</h2>
+      <div class="section-head split">
+        <div class="reveal">
+          <p class="section-kicker"><span class="prompt">$</span> cd ~/experience</p>
+          <h2 class="section-title">Where I've worked</h2>
+          <p class="section-sub">Twenty years across banking, insurance, government and technology, from middleware and master data on the IBM stack to Terraform, GitHub Actions and Snowflake on AWS.</p>
+        </div>
+        <figure class="terminal reveal" aria-label="Career history written as a git log">
+          <div class="terminal-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="terminal-title">~/experience</span>
+          </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">git log --oneline --reverse</span>
+<span class="t-str">0c4a2e1</span> <span class="t-ref">(tag: 2004)</span> <span class="t-bold">B.Eng, Carleton University</span>
+<span class="t-str">a37d915</span> <span class="t-ref">(tag: 2004)</span> Java developer, then DBA
+<span class="t-str">5d2f8a3</span> <span class="t-ref">(tag: 2006)</span> Middleware, IBM + Lafarge
+<span class="t-str">e81b6c4</span> <span class="t-ref">(tag: 2010)</span> Scotiabank, Toyota, TD
+<span class="t-str">7a3e9c2</span> <span class="t-ref">(tag: 2013)</span> MDM infra: ICBC, Dell
+<span class="t-str">4be81d0</span> <span class="t-ref">(tag: 2016)</span> MDM Architect, BMO
+<span class="t-str">9f2c1a7</span> <span class="t-ref">(<span class="t-head">HEAD -&gt; main</span>)</span> <span class="t-bold">Senior DevOps Lead</span></code></pre>
+        </figure>
       </div>
 
       <div class="timeline">
@@ -347,7 +364,7 @@
     <!-- PROJECTS -->
     <section class="section container" id="projects">
       <div class="section-head reveal">
-        <p class="section-kicker">03 // projects</p>
+        <p class="section-kicker"><span class="prompt">$</span> ls ~/projects</p>
         <h2 class="section-title">What I'm building</h2>
       </div>
 
@@ -446,7 +463,7 @@
     <!-- SKILLS -->
     <section class="section container" id="skills">
       <div class="section-head reveal">
-        <p class="section-kicker">04 // skills</p>
+        <p class="section-kicker"><span class="prompt">$</span> ls ~/toolkit</p>
         <h2 class="section-title">Technical toolkit</h2>
       </div>
 
@@ -528,10 +545,26 @@
 
     <!-- BEYOND WORK -->
     <section class="section container" id="life">
-      <div class="section-head reveal">
-        <p class="section-kicker">05 // beyond work</p>
-        <h2 class="section-title">Life outside the terminal</h2>
-        <p class="section-sub">Most of my time away from work goes to my wife and our three kids. The rest goes to sports, fishing, the grill and the garage.</p>
+      <div class="section-head split">
+        <div class="reveal">
+          <p class="section-kicker"><span class="prompt">$</span> cd ~/life</p>
+          <h2 class="section-title">Life outside the terminal</h2>
+          <p class="section-sub">Most of my time away from work goes to my wife and our three kids. The rest goes to sports, fishing, the grill and the garage.</p>
+        </div>
+        <figure class="terminal reveal" aria-label="Weekend plans written as a crontab">
+          <div class="terminal-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="terminal-title">~/life</span>
+          </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">crontab -l</span>
+<span class="t-com"># family first: runs every minute</span>
+<span class="t-num">* * * * *</span>  <span class="t-cmd">family</span> <span class="t-key">--wife --kids</span>=<span class="t-num">3</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">play</span> volleyball baseball basketball
+<span class="t-num">@weekly</span>    <span class="t-cmd">fishing</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">bbq</span> <span class="t-key">--steak</span>=<span class="t-str">perfect</span> <span class="t-key">--chicken</span>=<span class="t-str">moist</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">bbq</span> <span class="t-key">--experiment</span>=<span class="t-str">raw-veggies</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">garage</span> <span class="t-key">--car</span>=<span class="t-str">mustang-88-gt</span></code></pre>
+        </figure>
       </div>
 
       <div class="life-grid">
@@ -573,7 +606,7 @@
           <figcaption>Stand-in photo of a 1988 Mustang GT convertible until I post my own. Photo: <a href="https://commons.wikimedia.org/wiki/File:1988_Ford_Mustang_GT_(11148494493).jpg" target="_blank" rel="noopener">GPS 56 from New Zealand</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>, via Wikimedia Commons; cropped, plate blurred.</figcaption>
         </figure>
         <div class="garage-body">
-          <p class="section-kicker">$ terraform plan -target=garage.mustang</p>
+          <p class="section-kicker"><span class="prompt">$</span> terraform plan -target=garage.mustang</p>
           <h3>1988 Mustang GT convertible</h3>
           <ul class="chips">
             <li class="chip key">Red</li><li class="chip">Convertible</li><li class="chip">5.0L HO V8</li><li class="chip">T-5 5-speed manual</li>
@@ -601,7 +634,7 @@
     <!-- CONTACT -->
     <section class="section container" id="contact">
       <div class="contact-card reveal">
-        <p class="section-kicker">06 // contact</p>
+        <p class="section-kicker"><span class="prompt">$</span> ping ganesh</p>
         <h2 class="section-title">Let's talk</h2>
         <p class="contact-text">Working on infrastructure-as-code, CI/CD or a Snowflake data platform? I'd be glad to hear from you.</p>
         <div class="hero-actions center">
@@ -629,7 +662,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year">2026</span> Ganesh Subramaniam</p>
-      <p class="muted">Plain HTML &amp; CSS, hosted on GitHub Pages</p>
+      <p class="footer-cmd"><span class="prompt">$</span> git push origin main <span class="t-com"># plain HTML &amp; CSS on GitHub Pages</span></p>
     </div>
   </footer>
 

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | Ganesh Subramaniam</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0e14">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <main class="notfound container">
+    <p class="eyebrow">HTTP/2 <span class="t-err">404</span> Not Found</p>
+    <h1>404: page not found</h1>
+
+    <figure class="terminal" aria-label="A shell session showing the page could not be found">
+      <div class="terminal-bar" aria-hidden="true">
+        <i></i><i></i><i></i>
+        <span class="terminal-title">~</span>
+      </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">cd <span data-path>/missing-page</span></span>
+<span class="t-err">bash: cd: <span data-path>/missing-page</span>: No such file or directory</span>
+<span class="t-prompt">$</span> <span class="t-cmd">ls ~</span>
+<a href="/#about">about/</a>  <a href="/#experience">experience/</a>  <a href="/#projects">projects/</a>
+<a href="/#skills">toolkit/</a>  <a href="/#life">life/</a>  <a href="/#contact">contact/</a>
+<span class="t-prompt">$</span> <span class="t-cmd">cd ~</span><span class="cursor" aria-hidden="true"></span></code></pre>
+    </figure>
+
+    <a class="btn btn-primary" href="/">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      Back to the homepage
+    </a>
+  </main>
+
+  <script>
+    var path = location.pathname || '/';
+    try { path = decodeURIComponent(path); } catch (e) {}
+    document.querySelectorAll('[data-path]').forEach(function (el) { el.textContent = path; });
+  </script>
+</body>
+</html>
