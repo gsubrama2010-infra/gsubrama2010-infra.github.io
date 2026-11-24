@@ -254,6 +254,20 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .card h4 { font-size: 17px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
 .card p { margin: 0; color: var(--text-2); font-size: 15px; }
 
+/* Community photo card */
+.community {
+  display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 40px; align-items: center;
+  margin-top: 16px; padding: 24px; border-radius: 20px; border: 1px solid var(--border);
+  background: radial-gradient(520px 260px at 100% 0%, rgba(56, 189, 248, 0.1), transparent 70%), var(--surface);
+}
+.community-photo { margin: 0; }
+.community-photo img {
+  display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: 14px; border: 1px solid var(--border-strong);
+}
+.community-text h3 { margin: 0 0 12px; font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.02em; }
+.community-text p:not(.section-kicker) { margin: 0 0 18px; max-width: 34em; color: var(--text-2); font-size: 17px; }
+
 /* ---------- Experience timeline ---------- */
 .timeline { position: relative; display: grid; gap: 24px; }
 .timeline::before {
@@ -444,6 +458,7 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .portrait::after { inset: 12px -12px -12px 12px; border-radius: 22px; }
   .about-grid { grid-template-columns: 1fr; gap: 36px; }
   .project-grid, .interests { grid-template-columns: repeat(2, 1fr); }
+  .community { grid-template-columns: minmax(0, 240px) 1fr; gap: 28px; }
   .credentials { grid-template-columns: 1fr 1fr; }
   .cards, .earlier { grid-template-columns: repeat(2, 1fr); }
   .brand-name { display: none; }
@@ -490,6 +505,9 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .engagement { padding: 18px; }
   .early-list .mini-date { margin-left: 0; width: 100%; }
   .credentials, .project-grid, .interests { grid-template-columns: 1fr; }
+  .community { grid-template-columns: 1fr; gap: 20px; padding: 16px 16px 22px; }
+  .community-text { padding-inline: 4px; }
+  .community-text p:not(.section-kicker) { font-size: 16px; }
   .project { padding: 24px 18px; }
   .pblock { padding: 18px; }
   .project-stats dd { font-size: 26px; }
