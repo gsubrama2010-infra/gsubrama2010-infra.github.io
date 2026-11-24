@@ -10,7 +10,8 @@ Live site: https://gsubrama2010-infra.github.io
 index.html            All page content (about, experience, skills, contact)
 assets/css/style.css  Styles; colors and fonts are tokens at the top of the file
 assets/js/main.js     Small enhancements: scroll reveal, active nav link, footer year
-assets/img/           Portrait, Snowflake event photo (badge blurred), Mustang stand-in photo, og-image.jpg
+assets/img/           Portrait, Snowflake event photo (badge blurred), cartoon family illustration
+                      (generated with Runway; no real family photo is published), Mustang stand-in photo, og-image.jpg
 assets/Ganesh-Subramaniam-Resume.pdf   Public resume (no phone number or street address)
 assets/favicon.svg    Browser tab icon
 .nojekyll             Tells GitHub Pages to serve files as-is
