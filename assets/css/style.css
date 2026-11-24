@@ -327,17 +327,89 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 }
 .skill-group h3 { margin: 0 0 14px; font-size: 15px; font-weight: 600; color: var(--text); }
 
-.education {
-  display: flex; align-items: center; gap: 20px; margin-top: 48px;
-  padding: 26px 28px; border-radius: var(--radius);
-  background: linear-gradient(90deg, rgba(45, 212, 191, 0.07), transparent 70%), var(--surface);
-  border: 1px solid var(--border);
+/* Education, certifications, languages */
+.credentials { display: grid; grid-template-columns: 1.15fr 1.25fr 0.8fr; gap: 16px; margin-top: 48px; }
+.cred {
+  padding: 24px; border-radius: var(--radius); border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(45, 212, 191, 0.07), transparent 60%), var(--surface);
 }
-.education .card-icon { margin: 0; width: 52px; height: 52px; border-radius: 13px; }
-.education .card-icon svg { width: 24px; height: 24px; }
-.education .section-kicker { margin-bottom: 4px; }
-.education h3 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
-.education p.muted { margin: 4px 0 0; font-size: 15px; }
+.cred .section-kicker { margin: 0 0 8px; }
+.cred h3 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.4; }
+.cred p.muted { margin: 6px 0 0; font-size: 14.5px; }
+.cred-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.cred-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 15.5px; font-weight: 500; }
+.cred-list .yr { font-family: var(--font-mono); font-size: 12.5px; font-weight: 400; color: var(--muted); }
+
+/* ---------- Projects ---------- */
+.project {
+  position: relative; overflow: hidden; padding: 36px;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px;
+}
+.project::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2) 45%, transparent);
+}
+.project-status {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; padding: 4px 11px;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--accent);
+  border: 1px solid var(--accent-line); border-radius: 999px; background: var(--accent-soft);
+}
+.project-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.project h3 { margin: 0 0 10px; font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.02em; }
+.project-lede { margin: 0; max-width: 46em; color: var(--text-2); font-size: 17px; }
+.project-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0; }
+.project-stats div {
+  display: flex; flex-direction: column-reverse; justify-content: flex-end;
+  padding: 16px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-2);
+}
+.project-stats dd { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--accent); }
+.project-stats dt { margin-top: 6px; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
+.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.pblock { padding: 20px 22px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; }
+.pblock-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.pblock-head .card-icon { margin: 0; width: 36px; height: 36px; border-radius: 9px; }
+.pblock-head .card-icon svg { width: 18px; height: 18px; }
+.pblock h4 { margin: 0; font-size: 16px; font-weight: 600; }
+.pblock .bullets { margin: 0; gap: 9px; }
+.pblock .bullets li { font-size: 14.5px; }
+
+/* ---------- Beyond work ---------- */
+.section-sub { margin: 14px 0 0; max-width: 40em; color: var(--text-2); font-size: 17px; }
+.interests { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.interest {
+  display: flex; align-items: flex-start; gap: 16px; padding: 22px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.interest .card-icon { margin: 0; }
+.interest h4 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; }
+.interest p { margin: 0; color: var(--text-2); font-size: 15px; }
+.interest a { color: var(--accent); font-weight: 500; text-decoration: none; white-space: nowrap; }
+.interest a::after { content: " ↓"; }
+.interest a:hover { text-decoration: underline; }
+
+.garage { margin-top: 28px; overflow: hidden; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; }
+.garage-photo { margin: 0; }
+.garage-photo img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; }
+.garage-photo figcaption { padding: 10px 28px; font-size: 12.5px; color: var(--muted); border-bottom: 1px solid var(--border); }
+.garage-photo figcaption a { color: var(--text-2); }
+.garage-body { padding: 28px; }
+.garage-body .section-kicker { margin-bottom: 8px; }
+.garage-body h3 { margin: 0 0 14px; font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.02em; }
+.garage-goal { margin: 16px 0 22px; max-width: 46em; color: var(--text-2); }
+
+.plan { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14.5px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.plan th, .plan td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.plan tbody tr:last-child th, .plan tbody tr:last-child td { border-bottom: 0; }
+.plan thead th {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); background: var(--surface-2);
+}
+.plan tbody th { width: 15%; font-weight: 600; color: var(--text); }
+.plan td.cur { width: 38%; color: var(--muted); }
+.plan td.new { color: var(--text); }
+.plan td.new::before { content: "~ "; font-family: var(--font-mono); font-weight: 500; color: #fbbf24; }
+.plan-summary { margin: 16px 0 0; font-family: var(--font-mono); font-size: 13.5px; color: var(--text-2); }
+.t-change { color: #fbbf24; }
 
 /* ---------- Contact ---------- */
 .contact-card {
@@ -371,6 +443,8 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .portrait { order: -1; justify-self: start; max-width: 260px; }
   .portrait::after { inset: 12px -12px -12px 12px; border-radius: 22px; }
   .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .project-grid, .interests { grid-template-columns: repeat(2, 1fr); }
+  .credentials { grid-template-columns: 1fr 1fr; }
   .cards, .earlier { grid-template-columns: repeat(2, 1fr); }
   .brand-name { display: none; }
 }
@@ -380,6 +454,20 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .stat:nth-child(2) { border-right: 0; }
   .stat:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
   .engagements { grid-template-columns: 1fr; }
+  .project-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .plan thead { display: none; }
+  .plan, .plan tbody, .plan tr, .plan th, .plan td,
+  .plan tbody th, .plan td.cur, .plan td.new { display: block; width: auto; }
+  .plan tbody tr { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .plan tbody tr:last-child { border-bottom: 0; }
+  .plan tbody th, .plan td { padding: 0; border: 0; }
+  .plan tbody th { margin-bottom: 6px; }
+  .plan td.cur::before { content: attr(data-label) ": "; font-family: var(--font-mono); font-size: 12px; }
+  .plan td.new { margin-top: 4px; }
+  .plan td.new::before { content: "~ desired: "; font-size: 12px; }
 }
 
 @media (max-width: 600px) {
@@ -401,7 +489,13 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .job-role { font-size: 19px; }
   .engagement { padding: 18px; }
   .early-list .mini-date { margin-left: 0; width: 100%; }
-  .education { flex-direction: column; align-items: flex-start; padding: 22px; }
+  .credentials, .project-grid, .interests { grid-template-columns: 1fr; }
+  .project { padding: 24px 18px; }
+  .pblock { padding: 18px; }
+  .project-stats dd { font-size: 26px; }
+  .garage-body { padding: 22px 18px; }
+  .garage-photo figcaption { padding: 10px 18px; }
+  .garage-body .section-kicker { font-size: 11.5px; }
   .portrait { max-width: 220px; }
   .portrait-tag { left: 12px; bottom: 12px; padding: 6px 11px; font-size: 12.5px; }
   .contact-card { padding: 52px 20px; }
