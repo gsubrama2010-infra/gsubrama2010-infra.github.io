@@ -82,7 +82,11 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .skip:focus { top: 12px; }
 
 /* Aurora backdrop */
-.aurora { position: absolute; inset: 0 0 auto 0; height: 1100px; z-index: -1; overflow: hidden; pointer-events: none; }
+.aurora { position: absolute; inset: 0 0 auto 0; height: 1100px; z-index: -2; overflow: hidden; pointer-events: none; }
+/* Cosmic starfield behind the whole page (drawn by ai.js) */
+.cosmos { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+/* Background art may extend sideways; never let it widen the page */
+main { overflow-x: clip; }
 .aurora span { position: absolute; border-radius: 50%; will-change: transform; }
 .aurora span:nth-child(1) { width: 820px; height: 620px; left: 48%; top: -260px; background: radial-gradient(closest-side, rgb(var(--a2-rgb) / 0.42), transparent); animation: drift 22s var(--ease) infinite alternate; }
 .aurora span:nth-child(2) { width: 640px; height: 520px; left: -12%; top: -120px; background: radial-gradient(closest-side, rgb(var(--c-rgb) / 0.2), transparent); animation: drift 26s var(--ease) infinite alternate-reverse; }
@@ -149,10 +153,18 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .hdr.menu-open .menu-btn .i-close { display: block; }
 
 /* ---------- Hero ---------- */
-.hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding-block: 72px 56px; }
+.hero { position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding-block: 72px 56px; }
+/* Large portrait faded into the background behind the hero copy */
+.hero-portrait {
+  position: absolute; z-index: -1; pointer-events: none;
+  top: -150px; left: 120px; width: min(720px, 56vw); opacity: 0.42;
+  -webkit-mask-image: radial-gradient(ellipse 60% 56% at 42% 33%, #000 35%, transparent 72%);
+          mask-image: radial-gradient(ellipse 60% 56% at 42% 33%, #000 35%, transparent 72%);
+}
+.hero-portrait img { display: block; width: 100%; height: auto; filter: saturate(0.8) contrast(1.05); }
 .who { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
 .who-img {
-  width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center 20%;
+  width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: center 20%;
   padding: 2px; background: var(--grad);
 }
 .who-name { margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
@@ -267,7 +279,7 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   display: inline-flex; align-items: center; gap: 9px; margin: 0 0 14px;
   font-family: var(--font-mono); font-size: 14px; color: var(--accent-2);
 }
-.hero-cmd { display: flex; margin-bottom: 18px; }
+.hero-cmd { display: flex; width: fit-content; margin-bottom: 18px; padding: 3px 10px; border-radius: 8px; background: rgb(var(--bg-rgb) / 0.78); } /* stays readable over the portrait */
 .prompt { color: var(--muted); }
 .sec-title { margin: 0; font-size: clamp(32px, 4.2vw, 52px); line-height: 1.06; letter-spacing: -0.035em; font-weight: 700; text-wrap: balance; }
 .sec-sub { margin: 18px 0 0; color: var(--text-2); font-size: 18px; max-width: 38em; }
@@ -306,7 +318,14 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 @keyframes blink { 50% { opacity: 0; } }
 
 /* About: copy beside the ~/career plan */
-.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 500px); gap: 40px 64px; align-items: center; }
+.about { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 500px); gap: 40px 64px; align-items: center; }
+/* Bronze / Silver / Gold data layers around the ~/career terminal:
+   Gold shows above it, Bronze below, data rises through the middle */
+.about-visual { position: relative; min-width: 0; }
+.layers { position: absolute; z-index: -1; left: 0; right: 0; top: 50%; transform: translateY(-50%); opacity: 0.8; pointer-events: none; }
+.layers svg { display: block; width: 100%; height: auto; stroke: none; }
+.layers .pkt { opacity: 0; animation: rise 5.4s linear infinite; animation-delay: var(--d); }
+@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 8%, 92% { opacity: 1; } 100% { transform: translateY(-540px); opacity: 0; } }
 .about-text { margin-top: 26px; }
 .about-text p { margin: 0 0 16px; max-width: 38em; color: var(--text-2); font-size: 17.5px; line-height: 1.7; }
 .about-text p:last-child { margin-bottom: 0; }
@@ -485,12 +504,15 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .aurora span, .live::after, .flow::before, .typing i { animation: none; }
   .msg.streaming .w { opacity: 1; animation: none; }
   .cursor { animation: none; }
+  .layers .pkt { animation: none; opacity: 0; }
   .btn, .tile, .ask, .agent-send { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .hero { grid-template-columns: 1fr; gap: 40px; }
+  .hero-portrait { left: auto; right: -40px; top: -110px; width: min(600px, 68vw); }
+  .layers { display: none; }
   .about, .sec-head.split { grid-template-columns: 1fr; }
   .about .terminal, .sec-head.split .terminal { max-width: 560px; }
   .agent { min-height: 0; max-width: 640px; }
@@ -529,7 +551,12 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 @media (max-width: 600px) {
   .wrap { padding-inline: 16px; }
   .logo-name { display: none; }
-  .hero { padding-block: 40px 40px; }
+  /* Phones: the portrait leads the hero, fading into the name and headline */
+  .hero { padding-block: 250px 40px; }
+  .hero-portrait { top: -40px; right: auto; left: 50%; transform: translateX(-42%); width: min(430px, 112vw); opacity: 0.6;
+    -webkit-mask-image: radial-gradient(ellipse 58% 52% at 42% 32%, #000 40%, transparent 74%);
+            mask-image: radial-gradient(ellipse 58% 52% at 42% 32%, #000 40%, transparent 74%); }
+  .who-img { display: none; }
   .who { margin-bottom: 22px; }
   .hero-sub, .sec-sub, .cta-text { font-size: 16.5px; }
   .hero-cta { gap: 10px; }
