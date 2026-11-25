@@ -16,8 +16,7 @@ assets/css/ai.css     Main page styles; every colour is a token in :root ("Bank-
 assets/js/ai.js       Main page behaviour: menu, reveals, counters, the Ask about Ganesh chat
 assets/css/style.css  Classic page styles
 assets/js/main.js     Classic page enhancements: scroll reveal, active nav link, footer year
-assets/img/           Portrait (ganesh-cutout.webp is a background-removed copy, faded behind the main hero),
-                      Snowflake event photo (badge blurred), cartoon family illustration
+assets/img/           Portrait, Snowflake event photo (badge blurred), cartoon family illustration
                       (generated with Runway; no real family photo is published), Mustang stand-in photo, og-image.jpg
 assets/Ganesh-Subramaniam-Resume.pdf   Public resume (no phone number or street address)
 assets/favicon.svg    Browser tab icon (a "›_" prompt); favicon.ico and assets/apple-touch-icon.png are PNG copies of it
