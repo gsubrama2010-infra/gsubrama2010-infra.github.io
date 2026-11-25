@@ -38,6 +38,7 @@
         <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
       <ul class="nav-links" id="site-menu">
+        <li><a href="#about">About</a></li>
         <li><a href="#impact">Impact</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#ai">AI work</a></li>
@@ -52,6 +53,7 @@
     <!-- HERO -->
     <section class="hero wrap" id="top">
       <div class="hero-copy">
+        <p class="hero-cmd rv"><span class="prompt">$</span> whoami</p>
         <div class="who rv">
           <img class="who-img" src="assets/img/ganesh.jpg" width="640" height="800" alt="Portrait of Ganesh Subramaniam" fetchpriority="high">
           <div>
@@ -179,10 +181,47 @@
       </ul>
     </section>
 
+    <!-- ABOUT -->
+    <section class="sec wrap" id="about">
+      <div class="about">
+        <div class="about-copy rv">
+          <p class="kicker"><span class="prompt">$</span> cat about.md</p>
+          <h2 class="sec-title">Safe, auditable change <span class="grad">at enterprise scale.</span></h2>
+          <div class="about-text">
+            <p>I'm a senior DevOps consultant with 20 years of enterprise infrastructure experience across banking, insurance, government and technology, working with clients including <strong>BMO, TD, Scotiabank, ICBC and Dell</strong>. I hold a Bachelor of Engineering in Computer Systems Design Engineering from <strong>Carleton University</strong> in Ottawa.</p>
+            <p>I specialize in infrastructure-as-code, CI/CD automation and cloud data platforms, using <strong>Terraform, GitHub Actions, Ansible, AWS and Snowflake</strong> to deliver governed, auditable and repeatable environments.</p>
+            <p>That work rests on a deep foundation in high-availability architecture, middleware and master data management: five-nines platforms, large-scale migrations including Dell's 2-billion-record MDM implementation, and leading onshore and offshore teams.</p>
+          </div>
+        </div>
+        <figure class="terminal rv" style="--d:1" aria-label="A Terraform plan summarizing Ganesh's profile">
+          <div class="terminal-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="terminal-title">~/career</span>
+          </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">terraform plan -out=career.tfplan</span>
+
+  <span class="t-add">+</span> resource <span class="t-str">"engineer"</span> <span class="t-str">"ganesh"</span> {
+      <span class="t-add">+</span> <span class="t-key">role</span>    = <span class="t-str">"Senior DevOps Lead"</span>
+      <span class="t-add">+</span> <span class="t-key">years</span>   = <span class="t-num">20</span>
+      <span class="t-add">+</span> <span class="t-key">clients</span> = [<span class="t-str">"BMO"</span>, <span class="t-str">"TD"</span>, <span class="t-str">"Scotiabank"</span>,
+                   <span class="t-str">"ICBC"</span>, <span class="t-str">"Dell"</span>]
+      <span class="t-add">+</span> <span class="t-key">iac</span>     = [<span class="t-str">"Terraform"</span>, <span class="t-str">"Ansible"</span>]
+      <span class="t-add">+</span> <span class="t-key">cloud</span>   = [<span class="t-str">"AWS"</span>, <span class="t-str">"Snowflake"</span>]
+      <span class="t-add">+</span> <span class="t-key">ai</span>      = [<span class="t-str">"Claude"</span>, <span class="t-str">"MCP"</span>]
+      <span class="t-add">+</span> <span class="t-key">ci_cd</span>   = <span class="t-str">"GitHub Actions"</span>
+      <span class="t-add">+</span> <span class="t-key">sla</span>     = <span class="t-str">"99.999%"</span>
+    }
+
+<span class="t-bold">Plan:</span> <span class="t-add">1 to add</span>, 0 to change, 0 to destroy.
+<span class="t-prompt">$</span> <span class="t-cmd">terraform apply career.tfplan</span><span class="cursor" aria-hidden="true"></span></code></pre>
+        </figure>
+      </div>
+    </section>
+
     <!-- IMPACT -->
     <section class="sec wrap" id="impact">
       <div class="sec-head rv">
-        <p class="kicker">Impact</p>
+        <p class="kicker"><span class="prompt">$</span> terraform output impact</p>
         <h2 class="sec-title">Proof, not adjectives.</h2>
       </div>
       <dl class="stats">
@@ -198,7 +237,7 @@
     <!-- APPROACH -->
     <section class="sec wrap" id="approach">
       <div class="sec-head rv">
-        <p class="kicker">How I work</p>
+        <p class="kicker"><span class="prompt">$</span> cat CONTRIBUTING.md</p>
         <h2 class="sec-title">AI speed. <span class="grad"><span class="nowrap">Human-approved</span> change.</span></h2>
         <p class="sec-sub">AI makes me faster, but it never gets to skip review. Every infrastructure change takes the same path from idea to production.</p>
       </div>
@@ -234,7 +273,7 @@
     <!-- AI WORK -->
     <section class="sec wrap" id="ai">
       <div class="sec-head rv">
-        <p class="kicker">AI work</p>
+        <p class="kicker"><span class="prompt">$</span> ls ~/projects</p>
         <h2 class="sec-title">Production AI, built end to end.</h2>
         <p class="sec-sub">Alongside my consulting work, I'm designing, building and running a full-stack AI platform. It's private and pre-launch, so this shows how it's built rather than what it does.</p>
       </div>
@@ -283,9 +322,25 @@
 
     <!-- EXPERIENCE -->
     <section class="sec wrap" id="experience">
-      <div class="sec-head rv">
-        <p class="kicker">Experience</p>
-        <h2 class="sec-title">20 years, one <span class="nowrap">through-line:</span> <span class="grad">safe change at scale.</span></h2>
+      <div class="sec-head split">
+        <div class="rv">
+          <p class="kicker"><span class="prompt">$</span> cd ~/experience</p>
+          <h2 class="sec-title">20 years, one <span class="nowrap">through-line:</span> <span class="grad">safe change at scale.</span></h2>
+        </div>
+        <figure class="terminal rv" style="--d:1" aria-label="Career history written as a git log">
+          <div class="terminal-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="terminal-title">~/experience</span>
+          </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">git log --oneline --reverse</span>
+<span class="t-str">0c4a2e1</span> <span class="t-ref">(tag: 2004)</span> <span class="t-bold">B.Eng, Carleton University</span>
+<span class="t-str">a37d915</span> <span class="t-ref">(tag: 2004)</span> Java developer, then DBA
+<span class="t-str">5d2f8a3</span> <span class="t-ref">(tag: 2006)</span> Middleware, IBM + Lafarge
+<span class="t-str">e81b6c4</span> <span class="t-ref">(tag: 2010)</span> Scotiabank, Toyota, TD
+<span class="t-str">7a3e9c2</span> <span class="t-ref">(tag: 2013)</span> MDM infra: ICBC, Dell
+<span class="t-str">4be81d0</span> <span class="t-ref">(tag: 2016)</span> MDM Architect, BMO
+<span class="t-str">9f2c1a7</span> <span class="t-ref">(<span class="t-head">HEAD -&gt; main</span>)</span> <span class="t-bold">Senior DevOps Lead</span></code></pre>
+        </figure>
       </div>
 
       <div class="jobs">
@@ -367,13 +422,13 @@
     <!-- TOOLKIT -->
     <section class="sec wrap" id="toolkit">
       <div class="sec-head rv">
-        <p class="kicker">Toolkit</p>
+        <p class="kicker"><span class="prompt">$</span> ls ~/toolkit</p>
         <h2 class="sec-title">The stack I work in.</h2>
       </div>
       <div class="kit">
         <figure class="kit-photo rv">
           <img src="assets/img/snowflake-event.jpg" width="720" height="960" alt="Ganesh giving a thumbs-up next to the Snowflake polar bear mascot at a Snowflake conference" loading="lazy">
-          <figcaption>Keeping up with the community at Snowflake events.</figcaption>
+          <figcaption><span class="cap-cmd"><span class="prompt">$</span> snow connection test</span>Keeping up with the community at Snowflake events.</figcaption>
         </figure>
         <div class="kit-groups">
           <div class="kit-group rv" style="--d:0"><h3>AI</h3><ul class="tags"><li class="hot">Claude API</li><li class="hot">MCP</li><li>Snowflake Cortex AI</li><li>RAG</li><li>Prompt design</li><li>Structured outputs</li></ul></div>
@@ -388,7 +443,7 @@
     <!-- CREDENTIALS -->
     <section class="sec wrap" id="credentials">
       <div class="sec-head rv">
-        <p class="kicker">Credentials</p>
+        <p class="kicker"><span class="prompt">$</span> ls ~/credentials</p>
         <h2 class="sec-title">Canadian engineering degree. <span class="grad">Certified across clouds.</span></h2>
       </div>
       <div class="cred-grid">
@@ -419,10 +474,26 @@
 
     <!-- LIFE -->
     <section class="sec wrap" id="life">
-      <div class="sec-head rv">
-        <p class="kicker">Off the clock</p>
-        <h2 class="sec-title">The human in the loop.</h2>
-        <p class="sec-sub">Family comes first: my wife and our three kids. After that, it's sports, fishing, the grill and a 1988 Mustang project.</p>
+      <div class="sec-head split">
+        <div class="rv">
+          <p class="kicker"><span class="prompt">$</span> cd ~/life</p>
+          <h2 class="sec-title">The human in the loop.</h2>
+          <p class="sec-sub">Family comes first: my wife and our three kids. After that, it's sports, fishing, the grill and a 1988 Mustang project.</p>
+        </div>
+        <figure class="terminal rv" style="--d:1" aria-label="Weekly plans written as a crontab">
+          <div class="terminal-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="terminal-title">~/life</span>
+          </div>
+<pre><code><span class="t-prompt">$</span> <span class="t-cmd">crontab -l</span>
+<span class="t-com"># family first: runs every minute</span>
+<span class="t-num">* * * * *</span>  <span class="t-cmd">family</span> <span class="t-key">--wife --kids</span>=<span class="t-num">3</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">play</span> volleyball baseball basketball
+<span class="t-num">@weekly</span>    <span class="t-cmd">fishing</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">bbq</span> <span class="t-key">--steak</span>=<span class="t-str">perfect</span> <span class="t-key">--chicken</span>=<span class="t-str">moist</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">bbq</span> <span class="t-key">--experiment</span>=<span class="t-str">raw-veggies</span>
+<span class="t-num">@weekly</span>    <span class="t-cmd">garage</span> <span class="t-key">--car</span>=<span class="t-str">mustang-88-gt</span></code></pre>
+        </figure>
       </div>
       <div class="life">
         <figure class="life-family rv">
@@ -461,7 +532,7 @@
     <section class="sec wrap" id="contact">
       <div class="cta rv">
         <img class="cta-img" src="assets/img/ganesh.jpg" width="640" height="800" alt="" loading="lazy">
-        <p class="kicker">Contact</p>
+        <p class="kicker"><span class="prompt">$</span> ping ganesh</p>
         <h2 class="sec-title">Need AI speed <span class="grad">without losing control?</span></h2>
         <p class="cta-text">I'm glad to talk about DevOps, Snowflake platforms, or bringing AI into delivery safely.</p>
         <div class="cta-actions">
@@ -493,6 +564,7 @@
   <footer class="ftr">
     <div class="wrap ftr-inner">
       <p>© <span id="year">2026</span> Ganesh Subramaniam</p>
+      <p class="ftr-cmd"><span class="prompt">$</span> git push origin main <span class="t-com"># plain HTML, CSS &amp; JS on GitHub Pages</span></p>
       <p><a href="index.html">Prefer a terminal? See the classic version</a></p>
     </div>
   </footer>

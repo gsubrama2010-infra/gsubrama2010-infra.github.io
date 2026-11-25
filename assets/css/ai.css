@@ -114,7 +114,9 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   font-size: 15px; font-weight: 500; transition: color 0.15s ease, background 0.15s ease;
 }
 .nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(255, 255, 255, 0.07); }
+.nav-links a { white-space: nowrap; }
 .nav-links .nav-cta { color: var(--text); border: 1px solid var(--line-2); margin-left: 8px; }
+@media (min-width: 861px) and (max-width: 1000px) { .logo-name { display: none; } }
 .nav-links .nav-cta:hover { border-color: var(--violet); }
 .menu-btn {
   display: none; width: 48px; height: 48px; place-items: center; border-radius: 14px; cursor: pointer;
@@ -239,13 +241,56 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 /* ---------- Sections ---------- */
 .sec { padding-block: 120px 0; }
 .sec-head { max-width: 760px; margin-bottom: 44px; }
-.kicker {
-  display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px;
-  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--violet);
+/* Section labels are shell commands: "$ cat about.md" */
+.kicker, .hero-cmd {
+  display: inline-flex; align-items: center; gap: 9px; margin: 0 0 14px;
+  font-family: var(--font-mono); font-size: 14px; color: var(--cyan);
 }
-.kicker::before { content: ""; width: 22px; height: 1px; background: var(--grad); }
+.hero-cmd { display: flex; margin-bottom: 18px; }
+.prompt { color: var(--muted); }
 .sec-title { margin: 0; font-size: clamp(32px, 4.2vw, 52px); line-height: 1.06; letter-spacing: -0.035em; font-weight: 700; text-wrap: balance; }
 .sec-sub { margin: 18px 0 0; color: var(--text-2); font-size: 18px; max-width: 38em; }
+.sec-head.split { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 32px 56px; align-items: center; }
+
+/* ---------- Terminal windows ---------- */
+.terminal {
+  margin: 0; min-width: 0; overflow: hidden; border-radius: var(--r-md);
+  background: linear-gradient(180deg, #12121f, #0b0b15); border: 1px solid var(--line-2);
+  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85), 0 0 70px -24px rgba(124, 58, 237, 0.45);
+}
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); }
+.terminal-bar i { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-bar i:nth-child(1) { background: #f2665c; }
+.terminal-bar i:nth-child(2) { background: #f0b84a; }
+.terminal-bar i:nth-child(3) { background: #3ec46d; }
+.terminal-title { margin-inline: auto; padding-right: 49px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.terminal pre {
+  margin: 0; padding: 20px 22px 24px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 13px; line-height: 1.72; color: var(--text-2);
+}
+.t-prompt { color: var(--cyan); }
+.t-cmd { color: var(--text); }
+.t-add { color: #4ade80; }
+.t-key { color: #c4b5fd; }
+.t-str { color: #fcd34d; }
+.t-num { color: #f9a8d4; }
+.t-bold { color: var(--text); font-weight: 500; }
+.t-ref { color: #7dd3fc; }
+.t-head { color: var(--cyan); font-weight: 500; }
+.t-com { color: var(--muted); }
+.cursor {
+  display: inline-block; width: 8px; height: 1.15em; margin-left: 4px; vertical-align: -3px;
+  background: var(--violet); animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* About: copy beside the ~/career plan */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 500px); gap: 40px 64px; align-items: center; }
+.about-text { margin-top: 26px; }
+.about-text p { margin: 0 0 16px; max-width: 38em; color: var(--text-2); font-size: 17.5px; line-height: 1.7; }
+.about-text p:last-child { margin-bottom: 0; }
+.cap-cmd { display: block; margin-bottom: 4px; font-family: var(--font-mono); font-size: 12.5px; color: var(--cyan); }
+.ftr-cmd { font-family: var(--font-mono); font-size: 13px; }
 
 /* Spotlight cards */
 .spot { position: relative; isolation: isolate; overflow: hidden; }
@@ -413,12 +458,15 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .js .rv { opacity: 1; transform: none; transition: none; }
   .aurora span, .live::after, .flow::before, .typing i { animation: none; }
   .msg.streaming .w { opacity: 1; animation: none; }
+  .cursor { animation: none; }
   .btn, .tile, .ask, .agent-send { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .hero { grid-template-columns: 1fr; gap: 40px; }
+  .about, .sec-head.split { grid-template-columns: 1fr; }
+  .about .terminal, .sec-head.split .terminal { max-width: 560px; }
   .agent { min-height: 0; max-width: 640px; }
   .bento { grid-template-columns: repeat(2, 1fr); }
   .tile-xl { grid-row: auto; }
@@ -462,6 +510,8 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .hero-cta .btn:not(.btn-icon) { flex: 1 1 auto; }
   .hero-cta .btn-light:not(.btn-icon) { flex-basis: 100%; }
   .agent { padding: 18px 16px; }
+  .terminal pre { font-size: 11px; padding: 16px; }
+  .about-text p { font-size: 16.5px; }
   .agent.is-live .agent-thread { max-height: 60vh; }
   .agent.is-live .agent-asks {
     flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 16px 16px 6px;
