@@ -7,12 +7,15 @@ Live site: https://gsubrama2010-infra.github.io
 ## Structure
 
 ```
-index.html            All page content (about, experience, skills, contact)
+index.html            Main page: the AI-forward design (assets/css/ai.css, assets/js/ai.js)
+classic.html          Classic terminal-style design (assets/css/style.css, assets/js/main.js; noindex)
+ai.html               Redirect to the main page, so old /ai.html links still work
 404.html              Terminal-style "page not found" page (GitHub Pages serves it automatically)
-ai.html               Alternative AI-forward design (uses assets/css/ai.css and assets/js/ai.js; noindex while a draft)
-chat-worker/          Cloudflare Worker behind ai.html's "Ask about Ganesh" chat (setup in its README)
-assets/css/style.css  Styles; colors and fonts are tokens at the top of the file
-assets/js/main.js     Small enhancements: scroll reveal, active nav link, footer year
+chat-worker/          Cloudflare Worker behind the main page's "Ask about Ganesh" chat (setup in its README)
+assets/css/ai.css     Main page styles; every colour is a token in :root ("Bank-grade" navy and gold)
+assets/js/ai.js       Main page behaviour: menu, reveals, counters, the Ask about Ganesh chat
+assets/css/style.css  Classic page styles
+assets/js/main.js     Classic page enhancements: scroll reveal, active nav link, footer year
 assets/img/           Portrait, Snowflake event photo (badge blurred), cartoon family illustration
                       (generated with Runway; no real family photo is published), Mustang stand-in photo, og-image.jpg
 assets/Ganesh-Subramaniam-Resume.pdf   Public resume (no phone number or street address)
@@ -24,8 +27,9 @@ No build step or dependencies. It's plain HTML, CSS and JavaScript.
 
 ## Editing
 
-- **Content:** edit `index.html`. Each job is an `<article class="job">` block in the Experience section.
-- **Colors:** change `--accent` and `--accent-2` in `assets/css/style.css`.
+- **Content:** edit `index.html`. Each job is an `<article class="job">` block in the Experience section. The classic page (`classic.html`) has its own copy of the content.
+- **Colours:** the tokens at the top of `assets/css/ai.css` (main page) or `assets/css/style.css` (classic page).
+- **What the AI chat knows:** `chat-worker/src/profile.js`, then redeploy the Worker (see `chat-worker/README.md`).
 
 ## Preview locally
 

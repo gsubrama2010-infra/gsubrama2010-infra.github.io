@@ -1,4 +1,4 @@
-// Cloudflare Worker behind the "Ask about Ganesh" chat on ai.html.
+// Cloudflare Worker behind the "Ask about Ganesh" chat on the site's main page.
 // It keeps the Anthropic API key secret, accepts requests only from the
 // website, rate-limits each visitor and streams Claude's answer back as
 // newline-delimited JSON: {"type":"text","text":...} chunks, then

@@ -1,10 +1,10 @@
 # ganesh-chat: the AI behind "Ask about Ganesh"
 
-A small Cloudflare Worker that lets visitors to `ai.html` type their own
+A small Cloudflare Worker that lets visitors to the main page (`index.html`) type their own
 questions. Claude answers from the public profile in `src/profile.js`.
 
 ```
-browser (ai.html)  ──POST /chat──▶  Cloudflare Worker  ──▶  Claude API
+browser (index.html)──POST /chat──▶  Cloudflare Worker  ──▶  Claude API
                    ◀── streamed ───  (holds the API key,     (claude-opus-5-5)
                        answer        checks origin,
                                      rate-limits)
@@ -18,7 +18,7 @@ browser (ai.html)  ──POST /chat──▶  Cloudflare Worker  ──▶  Clau
 - `src/profile.js` is everything the AI knows. It is public in this repo, so keep it to facts that are already on the site.
 
 The suggested-question buttons on the page keep working with no Worker at all.
-While `data-api` in `ai.html` is empty, the page makes no AI calls.
+While `data-api` in `index.html` is empty, the page makes no AI calls.
 
 ## One-time setup (about 15 minutes)
 
@@ -39,9 +39,9 @@ While `data-api` in `ai.html` is empty, the page makes no AI calls.
    ```
 
 4. **Connect the page.** Put the URL that `deploy` printed into
-   `data-api="..."` on the `#agent` element in `ai.html`, then publish the site.
+   `data-api="..."` on the `#agent` element in `index.html`, then publish the site.
 
-To check it is live: open `ai.html`. The box under the suggested questions
+To check it is live: open `index.html`. The box under the suggested questions
 should say "Ask anything about Ganesh…".
 
 ## Cost
@@ -61,7 +61,7 @@ in the Anthropic console is the hard backstop.
 - **Model:** change `MODEL` in `wrangler.toml`, then deploy.
 - **Rate limit:** edit `[[ratelimits]]` in `wrangler.toml`. If a deploy ever
   rejects that block, delete it; the Worker runs without it.
-- **Turn the AI off:** clear `data-api` in `ai.html` (the page goes back to
+- **Turn the AI off:** clear `data-api` in `index.html` (the page goes back to
   pre-written answers only), or run `npx wrangler delete`.
 
 ## Local testing
@@ -74,5 +74,5 @@ ALLOWED_ORIGINS=http://localhost:8000
 
 Run `npx wrangler dev`, which serves on http://localhost:8787. In another
 terminal, serve the site from the repo root with `python -m http.server 8000`.
-Temporarily set `data-api="http://localhost:8787"` in `ai.html`, then open
-http://localhost:8000/ai.html. Every local question is a real, billed API call.
+Temporarily set `data-api="http://localhost:8787"` in `index.html`, then open
+http://localhost:8000/. Every local question is a real, billed API call.

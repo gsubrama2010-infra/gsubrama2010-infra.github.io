@@ -1,4 +1,4 @@
-// System prompt for the "Ask about Ganesh" AI guide on ai.html.
+// System prompt for the "Ask about Ganesh" AI guide on the site's main page.
 // Everything below is already public on the website. Do not add private
 // details here: no home address, family names or photos, and no name or
 // purpose for the private AI platform. The phone number is public only as
