@@ -321,6 +321,35 @@
           <p>Claude and Snowflake Cortex AI speed up automation, code generation and troubleshooting, plus prompt design and RAG over enterprise data.</p>
         </article>
       </div>
+        <figure class="arch rv" aria-labelledby="arch-ai-cap">
+          <p class="arch-head"><span class="prompt">$</span> tree ~/ai-platform -L 1</p>
+          <div class="arch-flow">
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>Clients</p>
+            <ul class="arch-nodes"><li class="node"><b>Web app</b><small>Next.js 16 · React 19</small></li><li class="node"><b>Android app</b><small>Expo · React Native</small></li><li class="node"><b>AI assistants</b><small>via MCP</small></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:0s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>Edge · Vercel</p>
+            <ul class="arch-nodes"><li class="node"><b>Server actions</b><small>TypeScript</small></li><li class="node hot"><b>MCP server</b><small>11 read-only tools</small></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:0.8s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Data</p>
+            <ul class="arch-nodes"><li class="node"><b>Supabase Postgres</b><small>76 row-level security policies</small></li><li class="node"><b>Event pipeline</b><small>pg_cron · pg_net · pgmq</small></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:1.6s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Services</p>
+            <ul class="arch-nodes"><li class="node hot"><b>Claude API</b><small>5 production features</small></li><li class="node"><b>Stripe Connect</b></li><li class="node"><b>Resend · Twilio · Expo push</b></li><li class="node"><b>Runway</b><small>video avatar</small></li></ul>
+          </div>
+          </div>
+          <div class="arch-bands">
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secured</span>OAuth 2.1 · MFA step-up consent · JWT verification · row-level security</p>
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Guarded</span>User content treated as data · validated model output · spend budgets · circuit breakers</p>
+          </div>
+          <figcaption id="arch-ai-cap">How my private AI platform fits together. It isn't public yet, so this shows the stack, not the product.</figcaption>
+        </figure>
     </section>
 
     <!-- EXPERIENCE -->
@@ -363,6 +392,35 @@
             </ul>
             <ul class="tags"><li class="hot">Snowflake</li><li>SPCS</li><li>Terraform</li><li>GitHub Actions</li><li>AWS</li><li>dbt</li><li>Cortex AI</li><li>Claude</li></ul>
           </div>
+        <figure class="arch rv job-arch" aria-labelledby="arch-snow-cap">
+          <p class="arch-head"><span class="prompt">$</span> terraform graph <span class="t-com"># simplified</span></p>
+          <div class="arch-flow">
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Sources</p>
+            <ul class="arch-nodes"><li class="node"><b>SFTP</b></li><li class="node"><b>APIs</b></li><li class="node"><b>AWS RDS</b><small>via NLB</small></li><li class="node"><b>GitHub</b></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:0s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m6 9 6 6 6-6"/><path d="M19 21H5"/></svg>Ingest</p>
+            <ul class="arch-nodes"><li class="node hot"><b>Openflow</b><small>managed ingestion</small></li><li class="node"><b>External Access Integrations</b></li><li class="node"><b>Network rules &amp; secrets</b></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:0.8s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>Snowflake on AWS</p>
+            <ul class="arch-nodes medallion"><li class="node bronze"><b>Bronze</b><small>raw</small></li><li class="node silver"><b>Silver</b><small>cleaned</small></li><li class="node gold"><b>Gold</b><small>business-ready</small></li></ul>
+          </div>
+          <div class="arch-link" aria-hidden="true"><i style="--d:1.6s"></i></div>
+          <div class="arch-col">
+            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Workloads</p>
+            <ul class="arch-nodes"><li class="node"><b>Data science</b></li><li class="node"><b>Engineering</b></li><li class="node"><b>SPCS services</b><small>Snowpark Container Services</small></li></ul>
+          </div>
+          </div>
+          <div class="arch-bands">
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Governed</span>RBAC at scale · PII tags, policies &amp; alerts · drift detection</p>
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>As code</span>Terraform + GitHub Actions: plan → review → apply, DEV → QA → PROD</p>
+          </div>
+          <figcaption id="arch-snow-cap">Simplified view of the Snowflake data platform I'm building for Momentum Financial.</figcaption>
+        </figure>
         </article>
 
         <article class="job rv">
@@ -399,6 +457,25 @@
             </ul>
             <ul class="tags"><li>WebSphere</li><li>DataStage</li><li>Oracle</li><li>DB2</li><li>MQ</li></ul>
           </div>
+        <figure class="arch rv job-arch" aria-labelledby="arch-mdm-cap">
+          <p class="arch-head"><span class="prompt">$</span> ls ~/mdm/environments</p>
+          <div class="arch-flow env">
+            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>DEV</b><small>build &amp; automate</small></li></ul></div>
+            <div class="arch-link" aria-hidden="true"><i style="--d:0.6s"></i></div>
+            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>QA</b><small>test</small></li></ul></div>
+            <div class="arch-link" aria-hidden="true"><i style="--d:1.2s"></i></div>
+            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>Pilot</b><small>prove at scale</small></li></ul></div>
+            <div class="arch-link" aria-hidden="true"><i style="--d:1.8s"></i></div>
+            <div class="arch-env"><ul class="arch-nodes"><li class="node hot"><b>PROD</b><small>five-nines</small></li></ul></div>
+            <div class="arch-link" aria-hidden="true"><i style="--d:2.4s"></i></div>
+            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>DR</b><small>failover</small></li></ul></div>
+          </div>
+          <div class="arch-bands">
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>Stack</span>IBM InfoSphere MDM · WebSphere 8 · Oracle 11g · Active Directory (LDAP)</p>
+          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>SLA</span>99.999%, agreed with CIOs, with hardened security in every environment</p>
+          </div>
+          <figcaption id="arch-mdm-cap">The environment path I built for ICBC's and Dell's MDM platforms.</figcaption>
+        </figure>
         </article>
 
         <article class="job rv">
