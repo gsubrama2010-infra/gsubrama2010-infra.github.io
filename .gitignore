@@ -1,0 +1,4 @@
+# Chat Worker build output and local secrets
+chat-worker/node_modules/
+chat-worker/.wrangler/
+chat-worker/.dev.vars

@@ -1,0 +1,22 @@
+name = "ganesh-chat"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Only these pages may call the Worker (comma-separated, exact origins).
+ALLOWED_ORIGINS = "https://gsubrama2010-infra.github.io"
+# claude-opus-5-5 by default. For roughly 1/40th of the cost per answer,
+# switch to "claude-haiku-5-5".
+MODEL = "claude-opus-5-5"
+
+# Per-visitor limit: 8 questions a minute from one IP address.
+[[ratelimits]]
+name = "CHAT_LIMITER"
+namespace_id = "2401"
+[ratelimits.simple]
+limit = 8
+period = 60
+
+# Secrets are set with `npx wrangler secret put`, never in this file:
+#   ANTHROPIC_API_KEY

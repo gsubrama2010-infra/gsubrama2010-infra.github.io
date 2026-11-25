@@ -147,7 +147,7 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 
 /* Profile agent */
 .agent {
-  position: relative; display: flex; flex-direction: column; min-height: 560px;
+  position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 560px;
   padding: 22px; border-radius: var(--r-lg); background: rgba(15, 15, 26, 0.78);
   border: 1px solid var(--line-2); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
   box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(167, 139, 250, 0.06);
@@ -198,7 +198,36 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .ask:hover { color: var(--text); border-color: rgba(167, 139, 250, 0.6); }
 .ask:active { transform: scale(0.97); }
 .ask[aria-pressed="true"] { color: var(--text); border-color: var(--violet); background: rgba(124, 58, 237, 0.2); }
+.ask[aria-disabled="true"] { opacity: 0.5; cursor: default; }
 .agent-note { margin: 12px 0 0; font-size: 12.5px; color: var(--muted); }
+
+/* Live mode: typed questions answered by the chat Worker */
+.agent.is-live .agent-thread {
+  max-height: 440px; overflow-y: auto; overscroll-behavior: contain;
+  margin-right: -8px; padding-right: 8px; scrollbar-width: thin; scrollbar-color: rgba(167, 139, 250, 0.35) transparent;
+}
+.agent.is-live .agent-thread:focus-visible { outline-offset: -2px; }
+.msg.bot.err { border-color: rgba(248, 113, 113, 0.4); }
+.agent-form { display: flex; gap: 8px; margin-top: 14px; }
+.agent-form[hidden] { display: none; }
+.agent-form input {
+  flex: 1; min-width: 0; min-height: 48px; padding: 12px 18px; border-radius: 999px;
+  font: 400 16px/1.3 var(--font-body); color: var(--text); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-2);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.agent-form input::placeholder { color: var(--muted); opacity: 1; }
+.agent-form input:hover { border-color: rgba(167, 139, 250, 0.5); }
+.agent-form input:focus { border-color: var(--violet); background: rgba(255, 255, 255, 0.06); }
+.agent-send {
+  display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%;
+  cursor: pointer; color: #fff; background: var(--grad-btn); box-shadow: 0 8px 24px -10px rgba(124, 58, 237, 0.9);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.agent-send svg { width: 20px; height: 20px; stroke-width: 2.2; }
+.agent-send:not(:disabled):hover { transform: translateY(-1px); }
+.agent-send:not(:disabled):active { transform: scale(0.94); }
+.agent-send:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* ---------- Clients ---------- */
 .clients { display: flex; align-items: center; gap: 16px 40px; flex-wrap: wrap; padding-block: 28px; border-block: 1px solid var(--line); }
@@ -383,7 +412,7 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .js .rv { opacity: 1; transform: none; transition: none; }
   .aurora span, .live::after, .flow::before, .typing i { animation: none; }
   .msg.streaming .w { opacity: 1; animation: none; }
-  .btn, .tile, .ask { transition: none; }
+  .btn, .tile, .ask, .agent-send { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -428,8 +457,18 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .hero { padding-block: 40px 40px; }
   .who { margin-bottom: 22px; }
   .hero-sub, .sec-sub, .cta-text { font-size: 16.5px; }
+  .hero-cta { gap: 10px; }
   .hero-cta .btn:not(.btn-icon) { flex: 1 1 auto; }
+  .hero-cta .btn-light:not(.btn-icon) { flex-basis: 100%; }
   .agent { padding: 18px 16px; }
+  .agent.is-live .agent-thread { max-height: 60vh; }
+  .agent.is-live .agent-asks {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 16px 16px 6px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent);
+            mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent);
+  }
+  .agent.is-live .agent-asks::-webkit-scrollbar { display: none; }
+  .agent.is-live .ask { flex-shrink: 0; white-space: nowrap; }
   .msg { max-width: 100%; }
   .clients { gap: 12px; }
   .clients-list { gap: 6px 22px; }

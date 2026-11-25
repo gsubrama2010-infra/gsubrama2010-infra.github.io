@@ -96,12 +96,25 @@
     });
   }
 
-  // Profile guide: pre-written answers, streamed word by word
+  // Profile guide: pre-written answers streamed word by word, plus typed
+  // questions answered by Claude when the chat Worker is configured.
   const agent = $('#agent');
   if (!agent) return;
   const thread = $('#agent-thread', agent);
   const asks = $$('.ask', agent);
+  const form = $('#agent-form', agent);
+  const input = $('#agent-input', agent);
+  const sendBtn = $('.agent-send', agent);
+  const endpoint = (agent.dataset.api || '').trim().replace(/\/+$/, '');
+  const live = Boolean(endpoint && form && window.fetch && window.TextDecoder && window.ReadableStream);
+  const EMAIL = 'gsubrama94@outlook.com';
+  const MAX_HISTORY = 12;
+  const MAX_QUESTIONS = 20;
+  const history = []; // what the AI sees: answers shown so far, as plain text
   let timer;
+  let pending = null; // finishes a pre-written answer that is still "typing"
+  let busy = false;
+  let asked = 0;
 
   // Wrap every word in a span so it can fade in; the full text is in the DOM at once
   const wrapWords = (root) => {
@@ -125,37 +138,68 @@
     return i;
   };
 
-  const answer = (key, question) => {
+  // Plain-text version of a pre-written answer, so the AI can follow up on it
+  const toPlain = (root) => {
+    const parts = [];
+    root.childNodes.forEach((n) => {
+      if (n.nodeType === 1 && (n.tagName === 'OL' || n.tagName === 'UL')) {
+        $$('li', n).forEach((li, i) => {
+          parts.push(`${n.tagName === 'OL' ? `${i + 1}.` : '-'} ${li.textContent.replace(/\s+/g, ' ').trim()}`);
+        });
+      } else {
+        const t = n.textContent.replace(/\s+/g, ' ').trim();
+        if (t) parts.push(t);
+      }
+    });
+    return parts.join('\n');
+  };
+
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const nearBottom = () => thread.scrollHeight - thread.scrollTop - thread.clientHeight < 80;
+  const toBottom = () => { if (live) thread.scrollTop = thread.scrollHeight; };
+  const typingDots = () => {
+    const t = el('div', 'typing');
+    t.setAttribute('aria-hidden', 'true');
+    t.innerHTML = '<i></i><i></i><i></i>';
+    return t;
+  };
+  const flush = () => { if (pending) { clearTimeout(timer); const f = pending; pending = null; f(); } };
+
+  // Pre-written answers. Without the AI they replace the thread; with it they
+  // join the conversation so follow-up questions have context.
+  const answer = (key, question, replay = false) => {
     const tpl = document.getElementById(`a-${key}`);
     if (!tpl) return;
-    clearTimeout(timer);
+    flush();
     asks.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.q === key)));
 
-    thread.textContent = '';
-    const q = document.createElement('div');
-    q.className = 'msg user';
-    q.textContent = question;
-    thread.appendChild(q);
-
-    const a = document.createElement('div');
-    a.className = 'msg bot';
+    if (!live || replay) thread.textContent = '';
+    thread.appendChild(el('div', 'msg user', question));
+    const a = el('div', 'msg bot');
     a.appendChild(tpl.content.cloneNode(true));
+    if (live && !replay) {
+      history.push({ role: 'user', content: question }, { role: 'assistant', content: toPlain(tpl.content) });
+    }
 
-    if (reduce) { thread.appendChild(a); return; }
+    if (reduce) { thread.appendChild(a); toBottom(); return; }
 
-    const typing = document.createElement('div');
-    typing.className = 'typing';
-    typing.setAttribute('aria-hidden', 'true');
-    typing.innerHTML = '<i></i><i></i><i></i>';
+    const typing = typingDots();
     thread.appendChild(typing);
-
-    timer = setTimeout(() => {
+    toBottom();
+    pending = () => {
       typing.remove();
       const words = wrapWords(a);
       a.classList.add('streaming');
       thread.appendChild(a);
-      timer = setTimeout(() => a.classList.remove('streaming'), words * 18 + 400);
-    }, 700);
+      toBottom();
+      setTimeout(() => a.classList.remove('streaming'), words * 18 + 400);
+    };
+    timer = setTimeout(flush, 700);
   };
 
   // Answers to clicked questions are announced; the automatic intro replay is not
@@ -166,15 +210,207 @@
   let intro;
   asks.forEach((btn) => {
     btn.addEventListener('click', () => {
+      if (busy) return; // wait for the AI answer that is streaming
       clearTimeout(intro);
       enableLive();
       answer(btn.dataset.q, btn.textContent.trim());
     });
   });
 
+  // Render the AI's plain-text answer safely: paragraphs, "- " or "1." lists,
+  // **bold**, and links only to Ganesh's own email, LinkedIn, WhatsApp and site.
+  const SAFE_LINKS = /^https:\/\/(www\.)?linkedin\.com\/in\/ganesh-s-aa0b27b\/?$|^https:\/\/wa\.me\/16472733595\/?$|^https:\/\/gsubrama2010-infra\.github\.io(\/[\w./#-]*)?$/;
+  const inline = (parent, text) => {
+    const re = /\*\*(.+?)\*\*|([\w.+-]+@[\w-]+(?:\.[\w-]+)+)|(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"])/g;
+    let last = 0;
+    let m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      if (m[1]) {
+        parent.appendChild(el('strong', null, m[1]));
+      } else if (m[2] && m[2].toLowerCase() === EMAIL) {
+        const a = el('a', null, m[2]);
+        a.href = `mailto:${EMAIL}`;
+        parent.appendChild(a);
+      } else if (m[3] && SAFE_LINKS.test(m[3])) {
+        const a = el('a', null, m[3].replace(/^https:\/\/(www\.)?/, ''));
+        a.href = m[3];
+        a.target = '_blank';
+        a.rel = 'noopener';
+        parent.appendChild(a);
+      } else {
+        parent.appendChild(document.createTextNode(m[0]));
+      }
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  };
+  const render = (box, text) => {
+    box.textContent = '';
+    text.trim().split(/\n{2,}/).forEach((block) => {
+      let list = null;
+      let para = null;
+      block.split('\n').forEach((raw) => {
+        const line = raw.trim();
+        if (!line) return;
+        const item = line.match(/^(?:[-*•]|(\d+)[.)])\s+(.*)$/);
+        if (item) {
+          const tag = item[1] ? 'OL' : 'UL';
+          if (!list || list.tagName !== tag) { list = el(tag.toLowerCase()); box.appendChild(list); }
+          const li = el('li');
+          inline(li, item[2]);
+          list.appendChild(li);
+          para = null;
+        } else {
+          list = null;
+          if (para) para.appendChild(document.createTextNode(' '));
+          else { para = el('p'); box.appendChild(para); }
+          inline(para, line);
+        }
+      });
+    });
+  };
+
+  const MESSAGES = {
+    rate: `Lots of questions right now. Please wait a minute and try again, or email Ganesh at ${EMAIL}.`,
+    down: `The AI guide isn't available right now. The suggested questions above still work, or email Ganesh at ${EMAIL}.`,
+    cut: '(The answer was cut off. Please try asking again.)',
+    refusal: "I can't help with that one, but I'm happy to answer questions about Ganesh's experience, skills and background.",
+    limit: `That's the question limit for this visit. To keep talking, email Ganesh at ${EMAIL}.`,
+  };
+
+  const setBusy = (on) => {
+    busy = on;
+    if (sendBtn) sendBtn.disabled = on;
+    asks.forEach((b) => { if (on) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); });
+    if (on) thread.setAttribute('aria-busy', 'true');
+    else thread.removeAttribute('aria-busy');
+  };
+
+  // Typed question: stream Claude's answer from the chat Worker
+  const ask = async (question) => {
+    clearTimeout(intro);
+    flush();
+    enableLive();
+    asks.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    thread.appendChild(el('div', 'msg user', question));
+
+    if (asked >= MAX_QUESTIONS) {
+      const box = el('div', 'msg bot');
+      render(box, MESSAGES.limit);
+      thread.appendChild(box);
+      toBottom();
+      return;
+    }
+    asked += 1;
+    setBusy(true);
+    history.push({ role: 'user', content: question });
+    const typing = typingDots();
+    thread.appendChild(typing);
+    toBottom();
+
+    const box = el('div', 'msg bot');
+    let text = '';
+    let stop = null;
+    let failed = null;
+    let paint = 0;
+    const show = () => {
+      paint = 0;
+      const stick = nearBottom();
+      if (!box.isConnected) { typing.remove(); thread.appendChild(box); }
+      render(box, text);
+      if (stick) toBottom();
+    };
+
+    try {
+      const res = await fetch(`${endpoint}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history.slice(-MAX_HISTORY) }),
+      });
+      if (!res.ok || !res.body) {
+        let code = '';
+        try { code = (await res.json()).error || ''; } catch { /* not JSON */ }
+        failed = res.status === 429 || code === 'busy' ? 'rate' : 'down';
+      } else {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+        for (;;) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+          let nl;
+          while ((nl = buf.indexOf('\n')) >= 0) {
+            const line = buf.slice(0, nl);
+            buf = buf.slice(nl + 1);
+            if (!line.trim()) continue;
+            let ev;
+            try { ev = JSON.parse(line); } catch { continue; }
+            if (ev.type === 'text' && typeof ev.text === 'string') {
+              text += ev.text;
+              if (!paint) paint = setTimeout(show, 40);
+            } else if (ev.type === 'done') {
+              stop = ev.stop_reason;
+            } else if (ev.type === 'error') {
+              failed = 'down';
+            }
+          }
+        }
+      }
+    } catch {
+      failed = 'down';
+    }
+    clearTimeout(paint);
+
+    let ok = false;
+    if (stop === 'refusal') {
+      text = MESSAGES.refusal;
+    } else if (!failed && stop && text.trim()) {
+      ok = true;
+      if (stop === 'max_tokens') text += '…';
+    } else if (text.trim()) {
+      text += `\n\n${MESSAGES.cut}`;
+      box.classList.add('err');
+    } else {
+      text = MESSAGES[failed || 'down'];
+      box.classList.add('err');
+    }
+    show();
+
+    if (ok) history.push({ role: 'assistant', content: text });
+    else history.pop(); // drop the unanswered question so the next one starts clean
+    setBusy(false);
+  };
+
+  if (live) {
+    agent.classList.add('is-live');
+    form.hidden = false;
+    thread.tabIndex = 0;
+    thread.setAttribute('aria-label', 'Conversation');
+    const status = $('.agent-status', agent);
+    if (status) status.textContent = 'AI guide · answers from my resume';
+    const note = $('#agent-note', agent);
+    if (note) note.textContent = 'Buttons show pre-written answers. Typed questions are answered by Claude (Anthropic) from my resume and can be wrong. Nothing is stored on this site.';
+    // The intro answer is already on screen, so the AI can follow up on it
+    const firstQ = $('.msg.user', thread);
+    const firstA = document.getElementById('a-hire');
+    if (firstQ && firstA) {
+      history.push({ role: 'user', content: firstQ.textContent.trim() }, { role: 'assistant', content: toPlain(firstA.content) });
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = input.value.replace(/\s+/g, ' ').trim();
+      if (!q || busy) return;
+      input.value = '';
+      ask(q);
+    });
+    input.addEventListener('focus', () => clearTimeout(intro), { once: true });
+  }
+
   if (reduce) { enableLive(); return; }
   intro = setTimeout(() => {
-    answer('hire', 'Why should we hire Ganesh?');
+    answer('hire', 'Why should we hire Ganesh?', true);
     intro = setTimeout(enableLive, 1200);
   }, 900);
 })();

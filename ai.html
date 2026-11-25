@@ -74,6 +74,9 @@
           <a class="btn btn-glass btn-icon" href="https://www.linkedin.com/in/ganesh-s-aa0b27b/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
+          <a class="btn btn-glass btn-icon" href="https://wa.me/16472733595?text=Hi%20Ganesh%2C%20I%20found%20your%20website%20and%20would%20like%20to%20connect." target="_blank" rel="noopener" aria-label="WhatsApp +1 (647) 273-3595 (opens WhatsApp)" title="WhatsApp +1 (647) 273-3595">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </a>
         </div>
 
         <ul class="creds rv" style="--d:4" aria-label="Education and certifications">
@@ -87,8 +90,11 @@
         </ul>
       </div>
 
-      <!-- Profile guide: pre-written answers, no model calls -->
-      <aside class="agent rv" style="--d:2" id="agent" aria-labelledby="agent-title">
+      <!-- Profile guide. The buttons show pre-written answers. When data-api
+           holds the chat Worker URL (see chat-worker/README.md), visitors can
+           also type questions, answered by Claude from the resume. Empty =
+           pre-written answers only, no model calls. -->
+      <aside class="agent rv" style="--d:2" id="agent" aria-labelledby="agent-title" data-api="">
         <div class="agent-head">
           <span class="agent-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
@@ -119,7 +125,14 @@
           <button class="ask" type="button" data-q="edu" aria-pressed="false">Education &amp; certs?</button>
           <button class="ask" type="button" data-q="reach" aria-pressed="false">How do I reach him?</button>
         </div>
-        <p class="agent-note">Pre-written answers. No AI model or tracking runs on this page.</p>
+        <form class="agent-form" id="agent-form" hidden>
+          <label class="sr-only" for="agent-input">Ask your own question about Ganesh</label>
+          <input id="agent-input" name="q" type="text" maxlength="500" autocomplete="off" enterkeyhint="send" placeholder="Ask anything about Ganesh…" required>
+          <button class="agent-send" type="submit" aria-label="Send question">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+          </button>
+        </form>
+        <p class="agent-note" id="agent-note">Pre-written answers. No AI model or tracking runs on this page.</p>
       </aside>
 
       <template id="a-hire">
@@ -152,7 +165,7 @@
         <p><a href="#credentials">See credentials</a></p>
       </template>
       <template id="a-reach">
-        <p>Email <a href="mailto:gsubrama94@outlook.com">gsubrama94@outlook.com</a> or connect on <a href="https://www.linkedin.com/in/ganesh-s-aa0b27b/" target="_blank" rel="noopener">LinkedIn</a>. He's based in Toronto, Ontario.</p>
+        <p>Message him on <a href="https://wa.me/16472733595?text=Hi%20Ganesh%2C%20I%20found%20your%20website%20and%20would%20like%20to%20connect." target="_blank" rel="noopener">WhatsApp at +1 (647) 273-3595</a>, email <a href="mailto:gsubrama94@outlook.com">gsubrama94@outlook.com</a> or connect on <a href="https://www.linkedin.com/in/ganesh-s-aa0b27b/" target="_blank" rel="noopener">LinkedIn</a>. He's based in Toronto, Ontario.</p>
       </template>
     </section>
 
@@ -457,6 +470,10 @@
           <a class="btn btn-glass" href="https://www.linkedin.com/in/ganesh-s-aa0b27b/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             LinkedIn
+          </a>
+          <a class="btn btn-glass" href="https://wa.me/16472733595?text=Hi%20Ganesh%2C%20I%20found%20your%20website%20and%20would%20like%20to%20connect." target="_blank" rel="noopener" aria-label="WhatsApp +1 (647) 273-3595 (opens WhatsApp)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            WhatsApp
           </a>
           <a class="btn btn-glass" href="assets/Ganesh-Subramaniam-Resume.pdf" download>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
