@@ -13,7 +13,7 @@ ai.html               Redirect to the main page, so old /ai.html links still wor
 404.html              Terminal-style "page not found" page (GitHub Pages serves it automatically)
 chat-worker/          Cloudflare Worker behind the main page's "Ask about Ganesh" chat (setup in its README)
 assets/css/ai.css     Main page styles; every colour is a token in :root ("Bank-grade" navy and gold)
-assets/js/ai.js       Main page behaviour: menu, reveals, counters, the Ask about Ganesh chat
+assets/js/ai.js       Main page behaviour: menu, reveals, counters, schematic wiring, the Ask about Ganesh chat
 assets/css/style.css  Classic page styles
 assets/js/main.js     Classic page enhancements: scroll reveal, active nav link, footer year
 assets/img/           Portrait, Snowflake event photo (badge blurred), cartoon family illustration

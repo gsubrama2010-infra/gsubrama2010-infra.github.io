@@ -321,34 +321,69 @@
           <p>Claude and Snowflake Cortex AI speed up automation, code generation and troubleshooting, plus prompt design and RAG over enterprise data.</p>
         </article>
       </div>
-        <figure class="arch rv" aria-labelledby="arch-ai-cap">
-          <p class="arch-head"><span class="prompt">$</span> tree ~/ai-platform -L 1</p>
-          <div class="arch-flow">
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>Clients</p>
-            <ul class="arch-nodes"><li class="node"><b>Web app</b><small>Next.js 16 · React 19</small></li><li class="node"><b>Android app</b><small>Expo · React Native</small></li><li class="node"><b>AI assistants</b><small>via MCP</small></li></ul>
+        <figure class="schem schem-ai rv" aria-labelledby="schem-ai-cap">
+          <p class="schem-head"><span class="prompt">$</span> tree ~/ai-platform -L 1</p>
+          <div class="schem-grid">
+            <div class="zone a-cli" id="ai-cli">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/><path d="M6 6.5h.01M9 6.5h.01"/></svg>Clients</p>
+              <ul class="comps">
+                <li class="comp" id="ai-web" data-links='[{"to": "ai-actions", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/><path d="M6 6.5h.01M9 6.5h.01"/></svg></span><span class="comp-t"><b>Web app</b><small>Next.js 16 · React 19</small></span></li>
+                <li class="comp" id="ai-android" data-links='[{"to": "ai-actions", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span><span class="comp-t"><b>Android app</b><small>Expo · React Native</small></span></li>
+                <li class="comp" id="ai-assist" data-links='[{"to": "ai-mcp", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></span><span class="comp-t"><b>AI assistants</b><small>connect over MCP</small></span></li>
+              </ul>
+            </div>
+            <div class="zone a-edge" id="ai-edge">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>Vercel · serverless</p>
+              <ul class="comps">
+                <li class="comp" id="ai-actions" data-links='[{"to": "ai-pg", "label": ""}, {"to": "ai-claude", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="comp-t"><b>Server actions</b><small>TypeScript</small></span></li>
+                <li class="comp hot" id="ai-mcp" data-links='[{"to": "ai-pg", "label": "read-only", "at": 0.3}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span><span class="comp-t"><b>MCP server</b><small>11 read-only tools</small></span><span class="chip">OAuth 2.1</span></li>
+              </ul>
+            </div>
+            <div class="zone a-data" id="ai-data">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Supabase</p>
+              <ul class="comps">
+                <li class="comp" id="ai-pg"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span><span class="comp-t"><b>Postgres</b><small>45 tables</small></span><span class="chip">RLS ×76</span></li>
+                <li class="comp" id="ai-auth"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="comp-t"><b>Auth</b><small>MFA · OAuth</small></span></li>
+                <li class="comp" id="ai-queue" data-links='[{"to": "ai-notify", "label": "notify"}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg></span><span class="comp-t"><b>Event queue</b><small>pg_cron · pgmq</small></span></li>
+              </ul>
+            </div>
+            <div class="zone a-ext label-right" id="ai-ext">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Providers</p>
+              <ul class="comps">
+                <li class="comp" id="ai-notify"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span><span class="comp-t"><b>Resend · Twilio · Expo</b><small>email · SMS · push</small></span></li>
+                <li class="comp" id="ai-stripe"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg></span><span class="comp-t"><b>Stripe Connect</b></span></li>
+                <li class="comp hot" id="ai-claude"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span><span class="comp-t"><b>Claude API</b><small>5 features</small></span></li>
+                <li class="comp" id="ai-runway"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span><span class="comp-t"><b>Runway</b><small>video avatar</small></span></li>
+              </ul>
+            </div>
           </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:0s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>Edge · Vercel</p>
-            <ul class="arch-nodes"><li class="node"><b>Server actions</b><small>TypeScript</small></li><li class="node hot"><b>MCP server</b><small>11 read-only tools</small></li></ul>
+          <p class="sr-only">Web and Android apps call server actions on Vercel; AI assistants connect to an MCP server with 11 read-only tools behind OAuth 2.1. Both read Supabase Postgres, protected by 76 row-level security policies. Server actions call the Claude API and Stripe, and an event queue sends email, SMS and push notifications.</p>
+          <figcaption id="schem-ai-cap">How my private AI platform fits together. It isn't public yet, so this shows the stack, not the product.</figcaption>
+        </figure>
+        <figure class="schem schem-chat rv" aria-labelledby="schem-chat-cap">
+          <p class="schem-head"><span class="prompt">$</span> cat how-this-chat-works.md</p>
+          <div class="schem-grid">
+            <div class="zone " id="ch-page">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/><path d="M6 6.5h.01M9 6.5h.01"/></svg>This page</p>
+              <ul class="comps">
+                <li class="comp" id="ch-ask" data-links='[{"to": "ch-worker", "label": "ask", "off": -8}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span><span class="comp-t"><b>Ask about Ganesh</b><small>your question</small></span></li>
+              </ul>
+            </div>
+            <div class="zone gold" id="ch-cf">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>Cloudflare</p>
+              <ul class="comps">
+                <li class="comp hot" id="ch-worker" data-links='[{"to": "ch-claude", "label": "+ profile", "off": -8}, {"to": "ch-ask", "label": "stream", "off": 8}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="comp-t"><b>Worker</b><small>origin allowlist · rate limit · secret key</small></span></li>
+              </ul>
+            </div>
+            <div class="zone " id="ch-ant">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Anthropic</p>
+              <ul class="comps">
+                <li class="comp" id="ch-claude" data-links='[{"to": "ch-worker", "label": "stream", "off": 8}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span><span class="comp-t"><b>Claude Opus 5.5</b><small>prompt-cached profile</small></span></li>
+              </ul>
+            </div>
           </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:0.8s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Data</p>
-            <ul class="arch-nodes"><li class="node"><b>Supabase Postgres</b><small>76 row-level security policies</small></li><li class="node"><b>Event pipeline</b><small>pg_cron · pg_net · pgmq</small></li></ul>
-          </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:1.6s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Services</p>
-            <ul class="arch-nodes"><li class="node hot"><b>Claude API</b><small>5 production features</small></li><li class="node"><b>Stripe Connect</b></li><li class="node"><b>Resend · Twilio · Expo push</b></li><li class="node"><b>Runway</b><small>video avatar</small></li></ul>
-          </div>
-          </div>
-          <div class="arch-bands">
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secured</span>OAuth 2.1 · MFA step-up consent · JWT verification · row-level security</p>
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Guarded</span>User content treated as data · validated model output · spend budgets · circuit breakers</p>
-          </div>
-          <figcaption id="arch-ai-cap">How my private AI platform fits together. It isn't public yet, so this shows the stack, not the product.</figcaption>
+          <p class="sr-only">Your question goes from this page to a Cloudflare Worker, which checks the origin, applies a rate limit and adds the secret key, then asks Claude Opus 5.5 with a cached copy of my profile. The answer streams back through the Worker to the page.</p>
+          <figcaption id="schem-chat-cap">How the Ask about Ganesh chat on this page works. I built the Worker myself.</figcaption>
         </figure>
     </section>
 
@@ -392,34 +427,54 @@
             </ul>
             <ul class="tags"><li class="hot">Snowflake</li><li>SPCS</li><li>Terraform</li><li>GitHub Actions</li><li>AWS</li><li>dbt</li><li>Cortex AI</li><li>Claude</li></ul>
           </div>
-        <figure class="arch rv job-arch" aria-labelledby="arch-snow-cap">
-          <p class="arch-head"><span class="prompt">$</span> terraform graph <span class="t-com"># simplified</span></p>
-          <div class="arch-flow">
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Sources</p>
-            <ul class="arch-nodes"><li class="node"><b>SFTP</b></li><li class="node"><b>APIs</b></li><li class="node"><b>AWS RDS</b><small>via NLB</small></li><li class="node"><b>GitHub</b></li></ul>
+        <figure class="schem schem-snow rv job-arch" aria-labelledby="schem-snow-cap">
+          <p class="schem-head"><span class="prompt">$</span> terraform graph | render <span class="t-com"># simplified</span></p>
+          <div class="schem-grid">
+            <div class="zone a-src" id="sn-src" data-links='[{"to": "sn-openflow", "label": "EAI"}]'>
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Sources</p>
+              <ul class="comps">
+                <li class="comp" id="sn-sftp"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg></span><span class="comp-t"><b>SFTP</b></span></li>
+                <li class="comp" id="sn-api"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></span><span class="comp-t"><b>APIs</b></span></li>
+                <li class="comp" id="sn-repo"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span><span class="comp-t"><b>GitHub repos</b><small>Git integration</small></span></li>
+              </ul>
+            </div>
+            <div class="zone a-aws" id="sn-aws">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>AWS</p>
+              <ul class="comps">
+                <li class="comp" id="sn-rds" data-links='[{"to": "sn-openflow", "label": "EAI"}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span><span class="comp-t"><b>RDS</b><small>via NLB</small></span></li>
+                <li class="comp" id="sn-s3"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span><span class="comp-t"><b>S3</b></span></li>
+                <li class="comp" id="sn-secrets"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg></span><span class="comp-t"><b>Secrets Manager</b></span></li>
+              </ul>
+            </div>
+            <div class="zone snow a-snow" id="sn-snow">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7"/><path d="m9 4 3 2 3-2M9 20l3-2 3 2"/></svg>Snowflake</p>
+              <ul class="comps">
+                <li class="comp hot c-flow" id="sn-openflow" data-links='[{"to": "sn-bronze", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 13c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg></span><span class="comp-t"><b>Openflow</b><small>managed ingestion</small></span></li>
+                <li class="comp bronze c-bronze" id="sn-bronze" data-links='[{"to": "sn-silver", "label": "dbt"}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span><span class="comp-t"><b>Bronze</b><small>raw</small></span></li>
+                <li class="comp silver c-silver" id="sn-silver" data-links='[{"to": "sn-gold", "label": "dbt"}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span><span class="comp-t"><b>Silver</b><small>cleaned</small></span></li>
+                <li class="comp gold c-gold" id="sn-gold" data-links='[{"to": "sn-work", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span><span class="comp-t"><b>Gold</b><small>business-ready</small></span></li>
+                <li class="comp c-spcs" id="sn-spcs"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="comp-t"><b>SPCS</b><small>container services</small></span></li>
+              </ul><p class="zone-foot"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>RBAC at scale</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>PII tags &amp; policies</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Drift detection</span></p>
+            </div>
+            <div class="zone a-work" id="sn-work">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Workloads</p>
+              <ul class="comps">
+                <li class="comp" id="sn-ds"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.5L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9.5V3"/><path d="M7 15h10"/></svg></span><span class="comp-t"><b>Data science</b></span></li>
+                <li class="comp" id="sn-eng"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></span><span class="comp-t"><b>Engineering</b></span></li>
+              </ul>
+            </div>
+            <div class="zone gold a-gh" id="sn-gh" data-links='[{"to": "sn-snow", "label": "manages", "kind": "manage", "off": 70, "wide": true}, {"to": "sn-aws", "label": "manages", "kind": "manage", "off": -70, "wide": true}]'>
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>GitHub Actions + Terraform</p>
+              <ul class="comps">
+                <li class="comp" id="sn-pr" data-links='[{"to": "sn-plan", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M6 9v12"/></svg></span><span class="comp-t"><b>Pull request</b></span></li>
+                <li class="comp" id="sn-plan" data-links='[{"to": "sn-approve", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></svg></span><span class="comp-t"><b>terraform plan</b><small>saved plan</small></span></li>
+                <li class="comp hot" id="sn-approve" data-links='[{"to": "sn-apply", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></span><span class="comp-t"><b>Approval</b><small>human review</small></span></li>
+                <li class="comp" id="sn-apply"><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span><span class="comp-t"><b>terraform apply</b><small>DEV → QA → PROD</small></span></li>
+              </ul>
+            </div>
           </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:0s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m6 9 6 6 6-6"/><path d="M19 21H5"/></svg>Ingest</p>
-            <ul class="arch-nodes"><li class="node hot"><b>Openflow</b><small>managed ingestion</small></li><li class="node"><b>External Access Integrations</b></li><li class="node"><b>Network rules &amp; secrets</b></li></ul>
-          </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:0.8s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>Snowflake on AWS</p>
-            <ul class="arch-nodes medallion"><li class="node bronze"><b>Bronze</b><small>raw</small></li><li class="node silver"><b>Silver</b><small>cleaned</small></li><li class="node gold"><b>Gold</b><small>business-ready</small></li></ul>
-          </div>
-          <div class="arch-link" aria-hidden="true"><i style="--d:1.6s"></i></div>
-          <div class="arch-col">
-            <p class="arch-step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Workloads</p>
-            <ul class="arch-nodes"><li class="node"><b>Data science</b></li><li class="node"><b>Engineering</b></li><li class="node"><b>SPCS services</b><small>Snowpark Container Services</small></li></ul>
-          </div>
-          </div>
-          <div class="arch-bands">
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Governed</span>RBAC at scale · PII tags, policies &amp; alerts · drift detection</p>
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>As code</span>Terraform + GitHub Actions: plan → review → apply, DEV → QA → PROD</p>
-          </div>
-          <figcaption id="arch-snow-cap">Simplified view of the Snowflake data platform I'm building for Momentum Financial.</figcaption>
+          <p class="sr-only">Data flows from SFTP, API and GitHub sources, and from AWS RDS through External Access Integrations, into Openflow; then into the Bronze layer, through dbt to Silver and Gold, and on to data science and engineering workloads. Snowpark Container Services run inside Snowflake. Pull requests go through terraform plan, human approval and terraform apply, and GitHub Actions with Terraform manage both the Snowflake and AWS resources.</p>
+          <figcaption id="schem-snow-cap">Simplified schematic of the Snowflake data platform I'm building for Momentum Financial.</figcaption>
         </figure>
         </article>
 
@@ -457,24 +512,22 @@
             </ul>
             <ul class="tags"><li>WebSphere</li><li>DataStage</li><li>Oracle</li><li>DB2</li><li>MQ</li></ul>
           </div>
-        <figure class="arch rv job-arch" aria-labelledby="arch-mdm-cap">
-          <p class="arch-head"><span class="prompt">$</span> ls ~/mdm/environments</p>
-          <div class="arch-flow env">
-            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>DEV</b><small>build &amp; automate</small></li></ul></div>
-            <div class="arch-link" aria-hidden="true"><i style="--d:0.6s"></i></div>
-            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>QA</b><small>test</small></li></ul></div>
-            <div class="arch-link" aria-hidden="true"><i style="--d:1.2s"></i></div>
-            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>Pilot</b><small>prove at scale</small></li></ul></div>
-            <div class="arch-link" aria-hidden="true"><i style="--d:1.8s"></i></div>
-            <div class="arch-env"><ul class="arch-nodes"><li class="node hot"><b>PROD</b><small>five-nines</small></li></ul></div>
-            <div class="arch-link" aria-hidden="true"><i style="--d:2.4s"></i></div>
-            <div class="arch-env"><ul class="arch-nodes"><li class="node"><b>DR</b><small>failover</small></li></ul></div>
+        <figure class="schem schem-mdm rv job-arch" aria-labelledby="schem-mdm-cap">
+          <p class="schem-head"><span class="prompt">$</span> ls ~/mdm/environments</p>
+          <div class="schem-grid">
+            <div class="zone " id="md-zone">
+              <p class="zone-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>IBM InfoSphere MDM · WebSphere 8 · Oracle 11g</p>
+              <ul class="comps">
+                <li class="comp" id="md-dev" data-links='[{"to": "md-qa", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></span><span class="comp-t"><b>DEV</b><small>build &amp; automate</small></span></li>
+                <li class="comp" id="md-qa" data-links='[{"to": "md-pilot", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="comp-t"><b>QA</b><small>test</small></span></li>
+                <li class="comp" id="md-pilot" data-links='[{"to": "md-prod", "label": ""}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="comp-t"><b>Pilot</b><small>prove at scale</small></span></li>
+                <li class="comp hot" id="md-prod" data-links='[{"to": "md-dr", "label": "replicate", "off": -12}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="comp-t"><b>PROD</b><small>five-nines</small></span><span class="chip">99.999%</span></li>
+                <li class="comp c-dr" id="md-dr" data-links='[{"to": "md-prod", "label": "failover", "off": 12}]'><span class="comp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></svg></span><span class="comp-t"><b>DR</b><small>disaster recovery</small></span></li>
+              </ul><p class="zone-foot"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Active Directory (LDAP)</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hardened security</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>SLA agreed with CIOs</span></p>
+            </div>
           </div>
-          <div class="arch-bands">
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>Stack</span>IBM InfoSphere MDM · WebSphere 8 · Oracle 11g · Active Directory (LDAP)</p>
-          <p class="band"><span class="band-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>SLA</span>99.999%, agreed with CIOs, with hardened security in every environment</p>
-          </div>
-          <figcaption id="arch-mdm-cap">The environment path I built for ICBC's and Dell's MDM platforms.</figcaption>
+          <p class="sr-only">Releases are promoted from DEV to QA, then Pilot, then PROD, which runs at a 99.999% SLA and replicates to a disaster-recovery environment.</p>
+          <figcaption id="schem-mdm-cap">The environment path I built for ICBC's and Dell's MDM platforms.</figcaption>
         </figure>
         </article>
 

@@ -475,74 +475,88 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 .ftr-inner a { color: var(--text-2); }
 .ftr-inner a:hover { color: var(--accent); }
 
-/* ---------- Architecture diagrams ---------- */
-.arch {
-  margin: 40px 0 0; padding: 22px 24px 20px; border-radius: var(--r-lg); border: 1px solid var(--line);
+/* ---------- Schematics: zones, components and JS-drawn wires ---------- */
+.schem {
+  position: relative; margin: 40px 0 0; padding: 22px 24px 20px; border-radius: var(--r-lg); border: 1px solid var(--line);
   background: radial-gradient(rgb(var(--fg-rgb) / 0.05) 1px, transparent 1.2px) 0 0 / 18px 18px, rgb(var(--fg-rgb) / 0.015);
 }
 .job-arch { grid-column: 1 / -1; margin-top: 8px; }
-.arch-head { margin: 0 0 18px; font-family: var(--font-mono); font-size: 13px; color: var(--accent-2); }
-.arch-flow { display: grid; grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr) 44px minmax(0, 1.1fr) 44px minmax(0, 1fr); align-items: center; }
-.arch-col { min-width: 0; align-self: stretch; display: flex; flex-direction: column; }
-.arch-step {
-  display: flex; align-items: center; gap: 7px; margin: 0 0 10px;
-  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+.schem-head { margin: 0 0 28px; font-family: var(--font-mono); font-size: 13px; color: var(--accent-2); }
+.schem-grid { display: grid; gap: 40px 48px; }
+.schem figcaption { margin-top: 18px; font-size: 13.5px; color: var(--muted); }
+.zone {
+  position: relative; display: flex; flex-direction: column; min-width: 0; padding: 26px 12px 12px; border-radius: 16px;
+  border: 1px dashed rgb(var(--fg-rgb) / 0.18); background: rgb(var(--fg-rgb) / 0.02);
 }
-.arch-step svg { width: 14px; height: 14px; color: var(--accent-2); }
-.arch-nodes { display: flex; flex-direction: column; gap: 8px; list-style: none; margin: 0; padding: 0; }
-.arch-col .arch-nodes { flex: 1; justify-content: center; }
-.node {
-  display: flex; flex-direction: column; padding: 9px 12px; border-radius: 10px;
-  background: var(--card-2); border: 1px solid var(--line-2); line-height: 1.3;
+.zone-label {
+  position: absolute; top: -12px; left: 12px; display: inline-flex; align-items: center; gap: 6px; max-width: calc(100% - 24px);
+  margin: 0; padding: 3px 10px; border-radius: 999px; background: var(--card); border: 1px solid var(--line-2);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.node b { font-size: 14px; font-weight: 600; color: var(--text); }
-.node small { margin-top: 2px; font-size: 12px; color: var(--muted); }
-.node.hot { border-color: rgb(var(--a-rgb) / 0.6); box-shadow: 0 0 0 3px rgb(var(--a-rgb) / 0.08), 0 10px 28px -14px rgb(var(--a-rgb) / 0.55); }
-.node.hot b { color: var(--accent); }
-/* Medallion layers, with dbt between them */
-.medallion { gap: 24px; }
-.medallion .node { position: relative; border-left-width: 3px; }
-.medallion .bronze { border-left-color: #c98a4b; }
-.medallion .bronze b { color: #dba26b; }
-.medallion .silver { border-left-color: #c5cedd; }
-.medallion .gold { border-left-color: #e3b860; }
-.medallion .gold b { color: var(--accent); }
-.medallion li + li::before {
-  content: "↓ dbt"; content: "↓ dbt" / ""; position: absolute; left: 12px; top: -21px;
-  font-family: var(--font-mono); font-size: 11px; color: var(--accent-2);
+.zone-label svg { width: 13px; height: 13px; }
+.zone.label-right .zone-label { left: auto; right: 12px; }
+.zone.snow { border-color: rgb(var(--c-rgb) / 0.45); background: rgb(var(--c-rgb) / 0.04); }
+.zone.gold { border-color: rgb(var(--a-rgb) / 0.45); background: rgb(var(--a2-rgb) / 0.05); }
+.zone.gold .zone-label { color: var(--accent); }
+.zone-foot { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; }
+.zone-foot span {
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; color: var(--text-2); background: rgb(var(--fg-rgb) / 0.04); border: 1px solid var(--line);
 }
-/* Connectors: a dashed line, an arrowhead and a dot of data moving along it */
-.arch-link { position: relative; height: 12px; margin-inline: 6px; overflow: hidden; }
-.arch-link::before {
-  content: ""; position: absolute; left: 0; right: 8px; top: 50%; height: 2px; margin-top: -1px;
-  background: repeating-linear-gradient(90deg, rgb(var(--c-rgb) / 0.55) 0 6px, transparent 6px 11px);
+.zone-foot svg { width: 12px; height: 12px; color: var(--green); stroke-width: 2.4; }
+.comps { flex: 1; display: grid; align-content: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.comp {
+  position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; min-width: 0; padding: 9px 11px; border-radius: 12px;
+  background: linear-gradient(180deg, rgb(var(--fg-rgb) / 0.045), rgb(var(--fg-rgb) / 0.01)), var(--card-2);
+  border: 1px solid var(--line-2); box-shadow: 0 10px 24px -18px rgb(0 0 0 / 0.9);
 }
-.arch-link::after {
-  content: ""; position: absolute; right: 0; top: 50%; margin-top: -4px;
-  border-left: 7px solid rgb(var(--c-rgb) / 0.8); border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+.comp-ic {
+  flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--accent-2);
+  background: linear-gradient(135deg, rgb(var(--c-rgb) / 0.2), rgb(var(--i-rgb) / 0.22)); border: 1px solid rgb(var(--c-rgb) / 0.3);
 }
-.arch-link i { position: absolute; inset: 0; transform: translateX(-100%); animation: flow-x 2.4s linear infinite; animation-delay: var(--d, 0s); }
-.arch-link i::after {
-  content: ""; position: absolute; right: 8px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
-  background: var(--g1); box-shadow: 0 0 8px 1px rgb(var(--a-rgb) / 0.8);
+.comp-ic svg { width: 17px; height: 17px; }
+.comp-t { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.comp-t b { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.comp-t small { font-size: 11.5px; color: var(--muted); }
+.comp .chip {
+  flex: none; margin-left: auto; padding: 2px 7px; border-radius: 999px; font: 500 10.5px/1.4 var(--font-mono);
+  color: var(--text-2); background: rgb(var(--fg-rgb) / 0.03); border: 1px solid var(--line-2);
 }
-@keyframes flow-x { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { transform: translateX(0); opacity: 0; } }
-@keyframes flow-y { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { transform: translateY(0); opacity: 0; } }
-/* Environment path: a single row of stages */
-.arch-flow.env { display: flex; align-items: center; }
-.arch-flow.env .arch-env { flex: 1 1 0; min-width: 0; }
-.arch-flow.env .arch-link { flex: 0 0 36px; }
-.arch-bands { display: grid; gap: 8px; margin-top: 18px; }
-.band {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0; padding: 10px 14px; border-radius: 10px;
-  border: 1px dashed rgb(var(--a-rgb) / 0.35); background: rgb(var(--a2-rgb) / 0.06); font-size: 14px; color: var(--text-2);
-}
-.band-k {
-  display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11.5px;
-  letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
-}
-.band-k svg { width: 14px; height: 14px; }
-.arch figcaption { margin-top: 14px; font-size: 13.5px; color: var(--muted); }
+.comp.hot { border-color: rgb(var(--a-rgb) / 0.6); box-shadow: 0 0 0 3px rgb(var(--a-rgb) / 0.08), 0 10px 28px -14px rgb(var(--a-rgb) / 0.55); }
+.comp.hot .comp-t b { color: var(--accent); }
+.comp.hot .comp-ic, .comp.gold .comp-ic { color: var(--accent); background: linear-gradient(135deg, rgb(var(--a-rgb) / 0.25), rgb(var(--a2-rgb) / 0.18)); border-color: rgb(var(--a-rgb) / 0.45); }
+.comp.bronze .comp-ic { color: #dba26b; background: rgb(201 138 75 / 0.16); border-color: rgb(201 138 75 / 0.45); }
+.comp.bronze .comp-t b { color: #dba26b; }
+.comp.silver .comp-ic { color: #dfe5ee; background: rgb(197 206 221 / 0.12); border-color: rgb(197 206 221 / 0.4); }
+.comp.gold .comp-t b { color: var(--accent); }
+/* Wires are drawn by ai.js into an SVG layered between the zones and the components */
+.wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; fill: none; stroke: none; }
+.wire { fill: none; stroke-width: 1.6; }
+.wire.flow { stroke: rgb(var(--c-rgb) / 0.6); stroke-dasharray: 5 6; animation: wire-dash 1.1s linear infinite; }
+.wire.manage { stroke: rgb(var(--a-rgb) / 0.6); stroke-dasharray: 2 5; }
+.arrowhead.flow { fill: rgb(var(--c-rgb) / 0.85); }
+.arrowhead.manage { fill: rgb(var(--a-rgb) / 0.8); }
+.packet { fill: var(--g1); filter: drop-shadow(0 0 3px rgb(var(--a-rgb) / 0.9)); }
+.wire-label rect { fill: var(--card); stroke: rgb(var(--c-rgb) / 0.35); }
+.wire-label.manage rect { stroke: rgb(var(--a-rgb) / 0.4); }
+.wire-label text { font-family: var(--font-mono); font-size: 10.5px; fill: var(--accent-2); }
+.wire-label.manage text { fill: var(--accent); }
+@keyframes wire-dash { to { stroke-dashoffset: -22; } }
+
+/* Layouts */
+.schem-snow .schem-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr) minmax(0, 0.9fr); grid-template-areas: "src snow work" "aws snow work" "gh gh gh"; }
+.a-src { grid-area: src; } .a-aws { grid-area: aws; } .a-snow { grid-area: snow; } .a-work { grid-area: work; } .a-gh { grid-area: gh; }
+.a-snow .comps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "flow bronze" "flow silver" "spcs gold"; gap: 34px 56px; }
+.c-flow { grid-area: flow; align-self: center; } .c-bronze { grid-area: bronze; } .c-silver { grid-area: silver; } .c-gold { grid-area: gold; } .c-spcs { grid-area: spcs; }
+.a-gh .comps { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 48px; }
+.schem-ai .schem-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.5fr); grid-template-areas: "cli edge data" "cli edge ext"; }
+.a-cli { grid-area: cli; } .a-edge { grid-area: edge; } .a-data { grid-area: data; } .a-ext { grid-area: ext; }
+.a-data .comps, .a-ext .comps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.a-edge .comps { gap: 40px; }
+.schem-chat .schem-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 96px; }
+.schem-mdm .comps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 46px 52px; }
+.schem-mdm .c-dr { grid-column: 4; }
 
 /* ---------- Reveal (JS only) ---------- */
 .js .rv { opacity: 0; transform: translateY(18px); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); transition-delay: calc(var(--d, 0) * 70ms); }
@@ -554,7 +568,7 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .aurora span, .live::after, .flow::before, .typing i { animation: none; }
   .msg.streaming .w { opacity: 1; animation: none; }
   .cursor { animation: none; }
-  .arch-link i { display: none; }
+  .wire.flow { animation: none; }
   .btn, .tile, .ask, .agent-send { transition: none; }
 }
 
@@ -590,22 +604,14 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   html:not(.js) .nav-links { flex-wrap: wrap; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .job { grid-template-columns: 1fr; gap: 10px; }
-  /* Diagrams flow top to bottom on narrow screens */
-  .arch-flow:not(.env) { grid-template-columns: 1fr; }
-  .arch-flow:not(.env) .arch-link { justify-self: center; width: 12px; height: 34px; margin: 4px 0; }
-  .arch-flow:not(.env) .arch-link::before {
-    left: 50%; right: auto; top: 0; bottom: 8px; width: 2px; height: auto; margin: 0 0 0 -1px;
-    background: repeating-linear-gradient(180deg, rgb(var(--c-rgb) / 0.55) 0 6px, transparent 6px 11px);
-  }
-  .arch-flow:not(.env) .arch-link::after {
-    right: auto; left: 50%; top: auto; bottom: 0; margin: 0 0 0 -4px;
-    border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 7px solid rgb(var(--c-rgb) / 0.8); border-bottom: 0;
-  }
-  .arch-flow:not(.env) .arch-link i { transform: translateY(-100%); animation-name: flow-y; }
-  .arch-flow:not(.env) .arch-link i::after { right: auto; left: 50%; top: auto; bottom: 8px; margin: 0 0 0 -3px; }
-  .arch-flow:not(.env) .arch-nodes:not(.medallion) { flex-direction: row; flex-wrap: wrap; }
-  .arch-flow:not(.env) .arch-nodes:not(.medallion) .node { flex: 1 1 120px; }
-  .arch-flow.env .arch-link { flex-basis: 24px; }
+  /* Schematics stack top to bottom on narrow screens */
+  .schem .schem-grid { grid-template-columns: minmax(0, 1fr); row-gap: 44px; }
+  .schem-snow .schem-grid { grid-template-areas: "src" "aws" "snow" "work" "gh"; }
+  .schem-ai .schem-grid { grid-template-areas: "cli" "edge" "data" "ext"; }
+  .a-snow .comps { grid-template-columns: minmax(0, 1fr); grid-template-areas: "flow" "bronze" "silver" "gold" "spcs"; gap: 30px; }
+  .a-gh .comps, .schem-mdm .comps { grid-template-columns: minmax(0, 1fr); row-gap: 30px; }
+  .schem-mdm .c-dr { grid-column: auto; }
+  .a-edge .comps { gap: 10px; }
   .kit { grid-template-columns: 1fr; }
   .kit-photo { max-width: 360px; }
   .cred-grid { grid-template-columns: 1fr 1fr; }
@@ -633,21 +639,8 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
   .agent.is-live .agent-asks::-webkit-scrollbar { display: none; }
   .agent.is-live .ask { flex-shrink: 0; white-space: nowrap; }
   .msg { max-width: 100%; }
-  /* Environment path runs top to bottom on phones */
-  .arch-flow.env { flex-direction: column; align-items: stretch; }
-  .arch-flow.env .arch-env { flex: none; }
-  .arch-flow.env .arch-link { flex: none; align-self: center; width: 12px; height: 26px; margin: 3px 0; }
-  .arch-flow.env .arch-link::before {
-    left: 50%; right: auto; top: 0; bottom: 8px; width: 2px; height: auto; margin: 0 0 0 -1px;
-    background: repeating-linear-gradient(180deg, rgb(var(--c-rgb) / 0.55) 0 6px, transparent 6px 11px);
-  }
-  .arch-flow.env .arch-link::after {
-    right: auto; left: 50%; top: auto; bottom: 0; margin: 0 0 0 -4px;
-    border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 7px solid rgb(var(--c-rgb) / 0.8); border-bottom: 0;
-  }
-  .arch-flow.env .arch-link i { transform: translateY(-100%); animation-name: flow-y; }
-  .arch-flow.env .arch-link i::after { right: auto; left: 50%; top: auto; bottom: 8px; margin: 0 0 0 -3px; }
-  .arch { padding: 18px 16px 16px; }
+  .schem { padding: 18px 14px 16px; }
+  .a-data .comps, .a-ext .comps { grid-template-columns: minmax(0, 1fr); }
   .clients { gap: 12px; }
   .clients-list { gap: 6px 22px; }
   .clients-list li { font-size: 18px; }

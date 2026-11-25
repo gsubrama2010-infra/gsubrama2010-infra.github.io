@@ -96,6 +96,118 @@
     });
   }
 
+  // Schematics: draw curved connectors between components (decorative; the
+  // components and a text summary carry the meaning without them).
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const svgEl = (tag, attrs, parent) => {
+    const n = document.createElementNS(SVGNS, tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => n.setAttribute(k, String(v)));
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+  const drawSchem = (root, index) => {
+    const box = root.getBoundingClientRect();
+    if (!box.width) return;
+    let svg = root.querySelector(':scope > .wires');
+    if (!svg) {
+      svg = svgEl('svg', { class: 'wires', 'aria-hidden': 'true', focusable: 'false' });
+      root.appendChild(svg);
+    }
+    svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    svg.textContent = '';
+    const defs = svgEl('defs', {}, svg);
+    ['flow', 'manage'].forEach((kind) => {
+      const m = svgEl('marker', { id: `w${index}-${kind}`, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }, defs);
+      svgEl('path', { d: 'M0 1 L10 5 L0 9 z', class: `arrowhead ${kind}` }, m);
+    });
+    const pos = (el) => {
+      const r = el.getBoundingClientRect();
+      const l = r.left - box.left;
+      const t = r.top - box.top;
+      return { l, t, r: l + r.width, b: t + r.height, cx: l + r.width / 2, cy: t + r.height / 2 };
+    };
+    const narrow = box.width < 700;
+    const cards = $$('.comp', root).map((el) => ({ el, r: pos(el) }));
+    // Skip a wire that would run behind another card (common once zones stack on phones)
+    const blocked = (pts, from, to) => cards.some(({ el, r }) => {
+      if (el === from || el === to || from.contains(el) || to.contains(el) || el.contains(from) || el.contains(to)) return false;
+      return pts.some(([x, y]) => x > r.l + 2 && x < r.r - 2 && y > r.t + 2 && y < r.b - 2);
+    });
+    root.querySelectorAll('[data-links]').forEach((from) => {
+      let links;
+      try { links = JSON.parse(from.dataset.links); } catch { return; }
+      const a = pos(from);
+      links.forEach((link) => {
+        const target = root.querySelector(`#${link.to}`);
+        if (!target || (link.wide && narrow)) return;
+        const b = pos(target);
+        const off = link.off || 0;
+        let p0;
+        let p3;
+        let horizontal = true;
+        if (b.l >= a.r - 2) { p0 = [a.r, a.cy + off]; p3 = [b.l, b.cy + off]; }
+        else if (b.r <= a.l + 2) { p0 = [a.l, a.cy + off]; p3 = [b.r, b.cy + off]; }
+        else if (b.t >= a.b - 2) { horizontal = false; p0 = [a.cx + off, a.b]; p3 = [b.cx + off, b.t]; }
+        else { horizontal = false; p0 = [a.cx + off, a.t]; p3 = [b.cx + off, b.b]; }
+        const axis = horizontal ? 0 : 1;
+        const span = p3[axis] - p0[axis];
+        const bend = Math.sign(span || 1) * Math.max(Math.abs(span) / 2, 16);
+        const p1 = horizontal ? [p0[0] + bend, p0[1]] : [p0[0], p0[1] + bend];
+        const p2 = horizontal ? [p3[0] - bend, p3[1]] : [p3[0], p3[1] - bend];
+        const curve = (t, k) => {
+          const u = 1 - t;
+          return u * u * u * p0[k] + 3 * u * u * t * p1[k] + 3 * u * t * t * p2[k] + t * t * t * p3[k];
+        };
+        const samples = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9].map((t) => [curve(t, 0), curve(t, 1)]);
+        if (blocked(samples, from, target)) return;
+        const d = `M${p0} C${p1} ${p2} ${p3}`;
+        const kind = link.kind === 'manage' ? 'manage' : 'flow';
+        svgEl('path', { d, class: `wire ${kind}`, 'marker-end': `url(#w${index}-${kind})` }, svg);
+        if (kind === 'flow' && !reduce) {
+          const dot = svgEl('circle', { r: 3, class: 'packet' }, svg); // moved along the wire by animateMotion
+          svgEl('animateMotion', { dur: `${(2.4 + Math.abs(span) / 260).toFixed(2)}s`, repeatCount: 'indefinite', path: d }, dot);
+        }
+        if (link.label) {
+          // Point on the curve at t (default: the middle)
+          const t = link.at || 0.5;
+          let mx = curve(t, 0);
+          let my = curve(t, 1);
+          const g = svgEl('g', { class: `wire-label ${kind}` }, svg);
+          const rect = svgEl('rect', { rx: 6 }, g);
+          const text = svgEl('text', { x: mx, y: my, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, g);
+          text.textContent = link.label;
+          let bb = text.getBBox();
+          if (off) { // paired wires: push each label out to its own side
+            if (horizontal) my += Math.sign(off) * (bb.height / 2 + 5);
+            else mx += Math.sign(off) * (bb.width / 2 + 8);
+            text.setAttribute('x', mx);
+            text.setAttribute('y', my);
+            bb = text.getBBox();
+          }
+          rect.setAttribute('x', bb.x - 6);
+          rect.setAttribute('y', bb.y - 3);
+          rect.setAttribute('width', bb.width + 12);
+          rect.setAttribute('height', bb.height + 6);
+        }
+      });
+    });
+  };
+  const schems = $$('.schem');
+  if (schems.length) {
+    const redraw = () => schems.forEach(drawSchem);
+    let pending = 0;
+    const queue = () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(redraw); };
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(queue);
+      schems.forEach((el) => ro.observe(el));
+    } else {
+      window.addEventListener('resize', queue);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+    window.addEventListener('load', queue);
+    queue();
+  }
+
   // Profile guide: pre-written answers streamed word by word, plus typed
   // questions answered by Claude when the chat Worker is configured.
   const agent = $('#agent');
